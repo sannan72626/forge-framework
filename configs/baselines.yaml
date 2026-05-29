@@ -1,0 +1,6 @@
+GA:   {lr: 1.0e-5, lora_rank: 16, epochs: 10, max_steps: 200}
+GD:   {lr: 1.0e-5, lora_rank: 16, epochs: 10, max_steps: 200}
+KL:   {lr: 1.0e-5, lora_rank: 16, epochs: 10, max_steps: 200}
+NPO:  {lr: 1.0e-5, lora_rank: 16, epochs: 10, max_steps: 200, beta: 0.1}
+FLAT: {lr: 1.0e-5, lora_rank: 16, epochs: 10, max_steps: 200, beta: 2.0}
+LoKU: {lr: 5.0e-6, lora_rank: 16, epochs: 10, max_steps: 200, margin: 0.5, lambda_retain: 1.0}

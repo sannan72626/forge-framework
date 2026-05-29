@@ -1,0 +1,8 @@
+{
+  "lr": 1e-06,
+  "epochs": 10,
+  "rank": 32,
+  "fq": 0.8880734813784313,
+  "mu": 0.9414054744169335,
+  "note": "Pareto-optimal (max FQ+MU). Use with 4-phase adaptive LR schedule."
+}

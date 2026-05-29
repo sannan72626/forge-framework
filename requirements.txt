@@ -1,0 +1,15 @@
+# FORGE — simulation only (no GPU)
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8
+rouge-score>=0.1.2
+
+# FORGE — full training (GPU required)
+torch>=2.1
+transformers>=4.40
+peft>=0.10
+datasets>=2.18
+accelerate>=0.28
+
+# Optional — open-unlearning framework integration
+# git+https://github.com/locuslab/open-unlearning.git

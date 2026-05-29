@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+
+# Model checkpoints (large — transfer separately or download fresh)
+outputs/wk0/
+outputs/wk4/
+outputs/wk6/
+outputs/wk7/
+outputs/wk8/
+outputs/wk9/
+
+# Keep sweep results, configs, and non-GPU outputs
+!outputs/wk1/
+!outputs/wk2/
+!outputs/wk3/
+!outputs/wk5/
+
+# Logs
+logs/
+*.log
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
