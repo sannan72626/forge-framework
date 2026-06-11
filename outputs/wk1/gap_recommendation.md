@@ -1,5 +1,13 @@
 # Research Gap Recommendation
 
+> **⚠️ IMPLEMENTATION SCOPE NOTE (added 2026-06-02).** This document is the *original
+> research proposal*. The method actually implemented and evaluated is a simpler,
+> validated objective — bounded-ascent unlearning with perturbation robustness. The
+> Fisher-weighted dual adapters, learned adversarial minimax, and CoT-KL below are
+> **scoped as future work**, not claimed as completed. See
+> `outputs/reports/method_audit.md` and `outputs/wk3/method_summary.md` for the
+> canonical method that the paper describes.
+
 **Chosen approach:** Address all three gaps (A + B + C) in a single unified objective.
 
 **Rationale:** The three gaps are orthogonal (A = capacity/selectivity, B = distribution shift,

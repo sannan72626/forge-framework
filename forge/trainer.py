@@ -685,32 +685,69 @@ def loss_LoKU(model, ref, forget, retain, device, margin=0.5, lam=1.0):
     return l_f + lam * l_r
 
 def loss_FORGE(model, ref, forget, retain, device,
-               lam=1.0, gamma=0.5, eta=0.01, ihl_margin=4.0):
+               lam=1.0, gamma=0.5, ihl_margin=4.0):
+    """FORGE: bounded-ascent unlearning with input-perturbation robustness.
+
+    Canonical objective (matches scripts/run_experiments.py, the version that
+    produced all reported results):
+
+        ℒ_FORGE = ℒ_forget + λ·ℒ_retain + γ·ℒ_robust
+          ℒ_forget = −tanh(NLL_f / m) · m            # bounded gradient ascent
+          ℒ_retain =  NLL(retain)                    # utility anchor
+          ℒ_robust = −tanh(NLL(perturb(forget)) / m) · m  # ascent on perturbed forget
+
+    The tanh bound caps the per-step forget gradient, preventing the runaway
+    divergence that collapses utility in plain GA/GD. The robustness term forces
+    forgetting to hold under input perturbation (random 20% token masking), a
+    lightweight retain-free robustness signal.
+
+    NOTE: the originally-proposed Fisher-weighted dual adapters, learned adversarial
+    probe generator, and CoT-trace KL are scoped as future work (see
+    outputs/reports/method_audit.md) and are NOT part of this objective.
+    """
+    # ℒ_forget — bounded gradient ascent (IHL-style)
     nll_f = _nll(model, forget, device)
     l_f = -torch.tanh(nll_f / ihl_margin) * ihl_margin
+
+    # ℒ_retain — utility anchor
+    l_r = _nll(model, retain, device)
+
+    # ℒ_robust — bounded ascent on input-perturbed forget (NOT minimization)
+    ids_rob = forget["input_ids"].clone().to(device)
+    ids_rob[torch.rand_like(ids_rob.float()) < 0.20] = 0
+    nll_rob = model(input_ids=ids_rob,
+                    attention_mask=forget["attention_mask"].to(device),
+                    labels=forget["labels"].to(device)).loss
+    l_rob = -torch.tanh(nll_rob / ihl_margin) * ihl_margin
+
+    return l_f + lam * l_r + gamma * l_rob
+
+
+def loss_FORGEH(model, ref, forget, retain, device, margin=4.0, lam=1.0, gamma=0.5):
+    """FORGE-Hybrid: LoKU hard-clamp forget + clamped perturbation-robustness.
+
+    Keeps LoKU's hard clamp (stable at scale — no overshoot) and adds a clamped
+    robustness term on input-perturbed forget. See outputs/reports/llama2_7b_report.md
+    for the diagnosis motivating this design.
+    """
+    l_f = -torch.clamp(_nll(model, forget, device), max=margin)
     l_r = _nll(model, retain, device)
     ids_rob = forget["input_ids"].clone().to(device)
-    drop = torch.rand_like(ids_rob.float()) < 0.20
-    ids_rob[drop] = 0
-    l_rob = model(input_ids=ids_rob,
-                  attention_mask=forget["attention_mask"].to(device),
-                  labels=forget["labels"].to(device)).loss
-    with torch.no_grad():
-        out_r = model(input_ids=retain["input_ids"].to(device),
-                      attention_mask=retain["attention_mask"].to(device),
-                      output_hidden_states=True)
-    h_r = out_r.hidden_states[-1]
-    gate_vals = torch.sigmoid(h_r.mean(-1))
-    l_gate = gate_vals.mean()
-    return l_f + lam * l_r + gamma * l_rob + eta * l_gate
+    ids_rob[torch.rand_like(ids_rob.float()) < 0.20] = 0
+    nll_rob = model(input_ids=ids_rob,
+                    attention_mask=forget["attention_mask"].to(device),
+                    labels=forget["labels"].to(device)).loss
+    l_rob = -torch.clamp(nll_rob, max=margin)
+    return l_f + lam * l_r + gamma * l_rob
 
 
 METHOD_LOSSES = {
-    "GA":    loss_GA,
-    "GD":    loss_GD,
-    "KL":    loss_KL,
-    "NPO":   loss_NPO,
-    "FLAT":  loss_FLAT,
-    "LoKU":  loss_LoKU,
-    "FORGE": loss_FORGE,
+    "GA":     loss_GA,
+    "GD":     loss_GD,
+    "KL":     loss_KL,
+    "NPO":    loss_NPO,
+    "FLAT":   loss_FLAT,
+    "LoKU":   loss_LoKU,
+    "FORGE":  loss_FORGE,
+    "FORGEH": loss_FORGEH,
 }

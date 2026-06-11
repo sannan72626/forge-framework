@@ -1,0 +1,10 @@
+lr: 2.0e-5
+lora_rank: 32
+lambda_retain: 2.0
+gamma_robust: 0.3
+ihl_margin: 4.0
+max_steps: 200
+eval_every: 25
+per_device_batch: 4
+max_length: 128
+retain_dataset: mmlu

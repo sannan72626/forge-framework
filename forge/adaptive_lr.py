@@ -42,6 +42,7 @@ Usage:
 
 import math
 import warnings
+from typing import List, Optional, Union
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 
@@ -75,13 +76,13 @@ class FORGEScheduler(LRScheduler):
         self,
         optimizer: Optimizer,
         total_steps: int,
-        lr_peak: float | None = None,
-        lr_base: float | None = None,
-        lr_adv:  float | None = None,
-        lr_floor: float | None = None,
-        t_warm:  float | int = 0.10,
-        t_decay: float | int = 0.67,
-        t_plat:  float | int = 0.83,
+        lr_peak: Optional[float] = None,
+        lr_base: Optional[float] = None,
+        lr_adv:  Optional[float] = None,
+        lr_floor: Optional[float] = None,
+        t_warm:  float = 0.10,
+        t_decay: float = 0.67,
+        t_plat:  float = 0.83,
         last_epoch: int = -1,
         verbose: bool = False,
     ):
@@ -140,7 +141,7 @@ class FORGEScheduler(LRScheduler):
             cosine   = 0.5 * (1.0 + math.cos(math.pi * progress))
             return self.lr_floor + (self.lr_adv - self.lr_floor) * cosine
 
-    def get_lr(self) -> list[float]:
+    def get_lr(self) -> List[float]:
         step = self.last_epoch
         lr   = self._compute_lr(step)
         return [lr for _ in self.base_lrs]
@@ -159,7 +160,7 @@ class FORGEScheduler(LRScheduler):
         else:
             return "cooldown"
 
-    def get_schedule_values(self, n_steps: int | None = None) -> list[float]:
+    def get_schedule_values(self, n_steps: Optional[int] = None) -> List[float]:
         """Return lr at every step (useful for visualisation / unit tests)."""
         n = n_steps or self.total_steps
         return [self._compute_lr(t) for t in range(n)]

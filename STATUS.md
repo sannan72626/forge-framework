@@ -1,5 +1,5 @@
 # Project Status
-current_week: 6
+current_week: 10
 last_task: Wk5 sweep simulation complete
 blocking: none
 
@@ -12,32 +12,38 @@ blocking: none
 - [x] Wk2: outputs/wk2/protocol.md
 - [x] Wk3: forge/adaptive_lr.py (FORGEScheduler)
 - [x] Wk3: forge/trainer.py (all 7 loss functions + METHOD_LOSSES)
-- [x] Wk3: configs/forge_default.yaml (lr=5e-6, rank=16, ep=10)
+- [x] Wk3: configs/forge_default.yaml (lr=5e-6, rank=32, ep=12)
 - [x] Wk3: outputs/wk3/method_summary.md
 - [x] Wk5: run forge_sweep_simulation.py → 48 runs
 - [x] Wk5: outputs/wk5/recommended_config.json (rank=32 theoretical; rank=16 on 8 GB)
 - [x] Wk5: outputs/wk5/heatmap.png + sweep_scatter.png + lr_epoch_curves.png + adaptive_lr.png
 
 ## Notes
-- Hardware: RTX 3050 8 GB — all configs use rank=16, batch=1, max_length=128, 4-bit quant
-- Target model: microsoft/Phi-3-mini-4k-instruct (fine-tuned on TOFU, Task 0)
-- Task 0 (Phi-3-mini TOFU fine-tune) must be done before Wk4 GPU experiments
-- Wk4: requires GPU + Task 0 complete + scripts/run_experiments.py
+- Hardware: RTX 3090 23 GB — use rank=32, batch=2, max_length=256, bfloat16 (no 4-bit needed)
+- Target model: locuslab/tofu_ft_llama2-7b (pre-finetuned on full TOFU, no Task 0 needed)
+- Reference model: locuslab/tofu_ft_llama2-7b_retain95 (for forget-5% FQ eval, provided by locuslab)
+- Task 0 (Phi-3-mini) is for Wk6 cross-model generalization only, NOT a Wk4 blocker
+- scripts/run_experiments.py is complete and GPU-ready
 
 ## TODO — Remaining tasks
-- [ ] Wk0: fine-tune Phi-3-mini on TOFU full → outputs/wk0/phi3_tofu_full/
-- [ ] Wk4: scripts/run_experiments.py (smoke + full modes)
-- [ ] Wk4: run smoke test (GPT-2, 30 steps)
+- [x] Wk4: scripts/run_experiments.py (smoke + full modes) ← DONE
+- [x] Wk4: smoke test PASS (GA + FORGE, 30 steps, RTX 3090)
+- [x] Wk4: all 5 methods ran 300 steps — pipeline verified, MU/ROUGE/MIA valid
+- [x] Wk4: COMPLETE — Phi-1.5 + TOFU forget05, valid oracle (retain95 from microsoft/phi-1_5)
+- [x] Wk4: FORGE peak FQ=0.869 (step 125), MU=0.488 — +0.473 FQ advantage over LoKU (0.396)
+- [x] Wk4: fig_trajectory.png saved → outputs/wk4/phi15/fig_trajectory.png
+- [x] Wk4: l_rob bug fixed (was minimizing, now gradient ascent on token-dropped forget)
 - [ ] Wk4: outputs/wk4/trajectories.json
 - [ ] Wk4: outputs/wk4/fig_trajectory.png
-- [ ] Wk6: multi-split runs (1%/5%/10%)
-- [ ] Wk6: cross-model runs (Phi/OPT/Llama)
-- [ ] Wk6: outputs/wk6/comparison_table.csv
-- [ ] Wk7: forge/wmdp_eval.py
-- [ ] Wk7: forge/muse_eval.py
-- [ ] Wk7: outputs/wk7/wmdp_summary.json
-- [ ] Wk7: outputs/wk7/muse_summary.json
-- [ ] Wk7: outputs/wk7/generalization_table.csv
+- [x] Wk6: multi-split runs complete (forget01/05/10 × 4 methods)
+- [x] Wk6: 3 oracles fine-tuned from base Phi-1.5 (retain99/95/90)
+- [x] Wk6: comparison_table.csv saved; FORGE ΔMU=0.061 (target <0.05, soft WARN)
+- [x] Wk6: FORGE has smallest ΔMU of any forgetting method; rank order preserved on forget05
+- [ ] Wk6: cross-model runs (deferred to Wk8 — Phi-2 or OPT if time allows)
+- [x] Wk7: COMPLETE — scripts/run_wmdp.py + scripts/run_muse.py + configs/forge_wmdp.yaml
+- [x] Wk7: FORGE WMDP acc=0.370 (WARN — MCQ alignment gap; proper format needed in Wk8)
+- [x] Wk7: FORGE MUSE VerbMem=0.000 PASS; KnowMem=0.115 WARN (best among retain-preserving)
+- [x] Wk7: generalization_table.csv saved → outputs/wk7/
 - [ ] Wk8: add GD+KL to forge/trainer.py (already done in METHOD_LOSSES)
 - [ ] Wk8: forge/stats.py
 - [ ] Wk8: 63-run grid complete

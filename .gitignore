@@ -5,7 +5,13 @@ __pycache__/
 *.egg-info/
 .eggs/
 
-# Model checkpoints (large — transfer separately or download fresh)
+# Model weights (too large for git — download from HuggingFace or reproduce via scripts)
+*.safetensors
+*.bin
+*.pt
+*.ckpt
+
+# Full model checkpoint directories
 outputs/wk0/
 outputs/wk4/
 outputs/wk6/

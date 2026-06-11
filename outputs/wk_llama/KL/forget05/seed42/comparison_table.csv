@@ -1,0 +1,2 @@
+method,fq,mu,rouge_forget,rouge_retain,mia_tr,mia_pr
+KL,0.0217,0.4038,0.5185,0.2530,11.9183,1.2548
