@@ -1,0 +1,50 @@
+{
+  "split": "forget05",
+  "n_examples": 60,
+  "results": {
+    "FORGE_gamma0.5": {
+      "canonical": {
+        "rouge_leak_mean": 0.4703236013349189,
+        "exact_leak_frac": 0.35,
+        "n": 60
+      },
+      "token_drop": {
+        "rouge_leak_mean": 0.32590433792879586,
+        "exact_leak_frac": 0.13333333333333333,
+        "n": 60
+      },
+      "word_shuffle": {
+        "rouge_leak_mean": 0.3080855768678758,
+        "exact_leak_frac": 0.03333333333333333,
+        "n": 60
+      },
+      "truncation": {
+        "rouge_leak_mean": 0.2966221911043464,
+        "exact_leak_frac": 0.08333333333333333,
+        "n": 60
+      }
+    },
+    "FORGE_gamma0": {
+      "canonical": {
+        "rouge_leak_mean": 0.5400152980619068,
+        "exact_leak_frac": 0.5166666666666667,
+        "n": 60
+      },
+      "token_drop": {
+        "rouge_leak_mean": 0.35403823692325276,
+        "exact_leak_frac": 0.16666666666666666,
+        "n": 60
+      },
+      "word_shuffle": {
+        "rouge_leak_mean": 0.31708784910651766,
+        "exact_leak_frac": 0.1,
+        "n": 60
+      },
+      "truncation": {
+        "rouge_leak_mean": 0.3290412285481888,
+        "exact_leak_frac": 0.11666666666666667,
+        "n": 60
+      }
+    }
+  }
+}

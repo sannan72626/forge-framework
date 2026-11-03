@@ -42,12 +42,30 @@ def paired_t(a, b, alpha=0.05):
     }
 
 
-def load_scores(results_dir, method, split, seeds, metric, peak=True):
-    """Load per-seed metric values from trajectory files.
+def _select_checkpoint(data):
+    """Pick t* = argmax_t (FQ_t * MU_t), matching the paper's Sec. III-K checkpoint
+    selection. Returns the single checkpoint dict so every metric read off it comes
+    from the SAME step.
 
-    If peak=True, returns the maximum value of the metric across all steps
-    (appropriate for FQ which peaks then declines).
-    If peak=False, returns the final-step value.
+    Revision note (2026-07-14): the previous version of this file took max(FQ) over
+    the whole trajectory but the FINAL step's MU independently — i.e. it could
+    combine FQ and MU from two different checkpoints. That's harmless for methods
+    whose MU decays slowly (FORGE, LoKU) because the peak-FQ step and the final step
+    have similar MU, but it silently reports J=0 for methods that peak early and then
+    collapse (e.g. NPO peaks at FQ=0.55 around step 40 while MU is still 0.26, then
+    both crash to 0 by step 250) — an artifact of comparing unrelated timesteps, not
+    a real failure of the method at its selected operating point.
+    """
+    return max(data, key=lambda p: p.get("fq", 0) * p.get("mu", 0))
+
+
+def load_scores(results_dir, method, split, seeds, metric, peak=True):
+    """Load per-seed metric values from trajectory files, all read off the SAME
+    joint-argmax(FQ*MU) checkpoint per seed (see _select_checkpoint).
+
+    `peak` is kept for backward-compatible call sites but no longer changes which
+    checkpoint is used — every metric is read from the jointly-selected checkpoint,
+    so FQ and MU (and any other metric) are always mutually consistent.
     """
     scores = []
     for seed in seeds:
@@ -58,11 +76,8 @@ def load_scores(results_dir, method, split, seeds, metric, peak=True):
         data = traj.get(method, list(traj.values())[0])
         if not data:
             continue
-        if peak:
-            val = max(p.get(metric, 0) for p in data)
-        else:
-            val = data[-1].get(metric, 0)
-        scores.append(val)
+        best = _select_checkpoint(data)
+        scores.append(best.get(metric, 0))
     return scores
 
 

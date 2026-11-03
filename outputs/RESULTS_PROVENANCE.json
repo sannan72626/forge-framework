@@ -1,0 +1,2215 @@
+{
+  "tofu_phi15_forget01_ga_fq_nll": {
+    "value": 0.0143,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GA/forget01/seed42/trajectories.json', 'outputs/wk8/GA/forget01/seed123/trajectories.json', 'outputs/wk8/GA/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_ga_mu_ret": {
+    "value": 0.1405,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GA/forget01/seed42/trajectories.json', 'outputs/wk8/GA/forget01/seed123/trajectories.json', 'outputs/wk8/GA/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_ga_j_diag": {
+    "value": 0.002,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GA/forget01/seed42/trajectories.json', 'outputs/wk8/GA/forget01/seed123/trajectories.json', 'outputs/wk8/GA/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget05_ga_fq_nll": {
+    "value": 0.2828,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GA/forget05/seed42/trajectories.json', 'outputs/wk8/GA/forget05/seed123/trajectories.json', 'outputs/wk8/GA/forget05/seed456/trajectories.json', 'outputs/wk8/GA/forget05/seed789/trajectories.json', 'outputs/wk8/GA/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_ga_mu_ret": {
+    "value": 0.4073,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GA/forget05/seed42/trajectories.json', 'outputs/wk8/GA/forget05/seed123/trajectories.json', 'outputs/wk8/GA/forget05/seed456/trajectories.json', 'outputs/wk8/GA/forget05/seed789/trajectories.json', 'outputs/wk8/GA/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_ga_j_diag": {
+    "value": 0.1152,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GA/forget05/seed42/trajectories.json', 'outputs/wk8/GA/forget05/seed123/trajectories.json', 'outputs/wk8/GA/forget05/seed456/trajectories.json', 'outputs/wk8/GA/forget05/seed789/trajectories.json', 'outputs/wk8/GA/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget10_ga_fq_nll": {
+    "value": 0.0583,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GA/forget10/seed42/trajectories.json', 'outputs/wk8/GA/forget10/seed123/trajectories.json', 'outputs/wk8/GA/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_ga_mu_ret": {
+    "value": 0.0748,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GA/forget10/seed42/trajectories.json', 'outputs/wk8/GA/forget10/seed123/trajectories.json', 'outputs/wk8/GA/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_ga_j_diag": {
+    "value": 0.0044,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GA/forget10/seed42/trajectories.json', 'outputs/wk8/GA/forget10/seed123/trajectories.json', 'outputs/wk8/GA/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_gd_fq_nll": {
+    "value": 0.001,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GD/forget01/seed42/trajectories.json', 'outputs/wk8/GD/forget01/seed123/trajectories.json', 'outputs/wk8/GD/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_gd_mu_ret": {
+    "value": 0.2315,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GD/forget01/seed42/trajectories.json', 'outputs/wk8/GD/forget01/seed123/trajectories.json', 'outputs/wk8/GD/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_gd_j_diag": {
+    "value": 0.0002,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GD/forget01/seed42/trajectories.json', 'outputs/wk8/GD/forget01/seed123/trajectories.json', 'outputs/wk8/GD/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget05_gd_fq_nll": {
+    "value": 0.8777,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GD/forget05/seed42/trajectories.json', 'outputs/wk8/GD/forget05/seed123/trajectories.json', 'outputs/wk8/GD/forget05/seed456/trajectories.json', 'outputs/wk8/GD/forget05/seed789/trajectories.json', 'outputs/wk8/GD/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_gd_mu_ret": {
+    "value": 0.338,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GD/forget05/seed42/trajectories.json', 'outputs/wk8/GD/forget05/seed123/trajectories.json', 'outputs/wk8/GD/forget05/seed456/trajectories.json', 'outputs/wk8/GD/forget05/seed789/trajectories.json', 'outputs/wk8/GD/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_gd_j_diag": {
+    "value": 0.2967,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GD/forget05/seed42/trajectories.json', 'outputs/wk8/GD/forget05/seed123/trajectories.json', 'outputs/wk8/GD/forget05/seed456/trajectories.json', 'outputs/wk8/GD/forget05/seed789/trajectories.json', 'outputs/wk8/GD/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget10_gd_fq_nll": {
+    "value": 0.1417,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GD/forget10/seed42/trajectories.json', 'outputs/wk8/GD/forget10/seed123/trajectories.json', 'outputs/wk8/GD/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_gd_mu_ret": {
+    "value": 0.1943,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GD/forget10/seed42/trajectories.json', 'outputs/wk8/GD/forget10/seed123/trajectories.json', 'outputs/wk8/GD/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_gd_j_diag": {
+    "value": 0.0275,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/GD/forget10/seed42/trajectories.json', 'outputs/wk8/GD/forget10/seed123/trajectories.json', 'outputs/wk8/GD/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_kl_fq_nll": {
+    "value": 0.0,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/KL/forget01/seed42/trajectories.json', 'outputs/wk8/KL/forget01/seed123/trajectories.json', 'outputs/wk8/KL/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_kl_mu_ret": {
+    "value": 0.6001,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/KL/forget01/seed42/trajectories.json', 'outputs/wk8/KL/forget01/seed123/trajectories.json', 'outputs/wk8/KL/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_kl_j_diag": {
+    "value": 0.0,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/KL/forget01/seed42/trajectories.json', 'outputs/wk8/KL/forget01/seed123/trajectories.json', 'outputs/wk8/KL/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget05_kl_fq_nll": {
+    "value": 0.0002,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/KL/forget05/seed42/trajectories.json', 'outputs/wk8/KL/forget05/seed123/trajectories.json', 'outputs/wk8/KL/forget05/seed456/trajectories.json', 'outputs/wk8/KL/forget05/seed789/trajectories.json', 'outputs/wk8/KL/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_kl_mu_ret": {
+    "value": 0.6006,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/KL/forget05/seed42/trajectories.json', 'outputs/wk8/KL/forget05/seed123/trajectories.json', 'outputs/wk8/KL/forget05/seed456/trajectories.json', 'outputs/wk8/KL/forget05/seed789/trajectories.json', 'outputs/wk8/KL/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_kl_j_diag": {
+    "value": 0.0001,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/KL/forget05/seed42/trajectories.json', 'outputs/wk8/KL/forget05/seed123/trajectories.json', 'outputs/wk8/KL/forget05/seed456/trajectories.json', 'outputs/wk8/KL/forget05/seed789/trajectories.json', 'outputs/wk8/KL/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget10_kl_fq_nll": {
+    "value": 0.0,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/KL/forget10/seed42/trajectories.json', 'outputs/wk8/KL/forget10/seed123/trajectories.json', 'outputs/wk8/KL/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_kl_mu_ret": {
+    "value": 0.5996,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/KL/forget10/seed42/trajectories.json', 'outputs/wk8/KL/forget10/seed123/trajectories.json', 'outputs/wk8/KL/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_kl_j_diag": {
+    "value": 0.0,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/KL/forget10/seed42/trajectories.json', 'outputs/wk8/KL/forget10/seed123/trajectories.json', 'outputs/wk8/KL/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_flat_fq_nll": {
+    "value": 0.0,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FLAT/forget01/seed42/trajectories.json', 'outputs/wk8/FLAT/forget01/seed123/trajectories.json', 'outputs/wk8/FLAT/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_flat_mu_ret": {
+    "value": 0.6001,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FLAT/forget01/seed42/trajectories.json', 'outputs/wk8/FLAT/forget01/seed123/trajectories.json', 'outputs/wk8/FLAT/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_flat_j_diag": {
+    "value": 0.0,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FLAT/forget01/seed42/trajectories.json', 'outputs/wk8/FLAT/forget01/seed123/trajectories.json', 'outputs/wk8/FLAT/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget05_flat_fq_nll": {
+    "value": 0.0002,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FLAT/forget05/seed42/trajectories.json', 'outputs/wk8/FLAT/forget05/seed123/trajectories.json', 'outputs/wk8/FLAT/forget05/seed456/trajectories.json', 'outputs/wk8/FLAT/forget05/seed789/trajectories.json', 'outputs/wk8/FLAT/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_flat_mu_ret": {
+    "value": 0.6057,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FLAT/forget05/seed42/trajectories.json', 'outputs/wk8/FLAT/forget05/seed123/trajectories.json', 'outputs/wk8/FLAT/forget05/seed456/trajectories.json', 'outputs/wk8/FLAT/forget05/seed789/trajectories.json', 'outputs/wk8/FLAT/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_flat_j_diag": {
+    "value": 0.0001,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FLAT/forget05/seed42/trajectories.json', 'outputs/wk8/FLAT/forget05/seed123/trajectories.json', 'outputs/wk8/FLAT/forget05/seed456/trajectories.json', 'outputs/wk8/FLAT/forget05/seed789/trajectories.json', 'outputs/wk8/FLAT/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget10_flat_fq_nll": {
+    "value": 0.0,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FLAT/forget10/seed42/trajectories.json', 'outputs/wk8/FLAT/forget10/seed123/trajectories.json', 'outputs/wk8/FLAT/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_flat_mu_ret": {
+    "value": 0.5996,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FLAT/forget10/seed42/trajectories.json', 'outputs/wk8/FLAT/forget10/seed123/trajectories.json', 'outputs/wk8/FLAT/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_flat_j_diag": {
+    "value": 0.0,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FLAT/forget10/seed42/trajectories.json', 'outputs/wk8/FLAT/forget10/seed123/trajectories.json', 'outputs/wk8/FLAT/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_loku_fq_nll": {
+    "value": 0.0024,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/LoKU/forget01/seed42/trajectories.json', 'outputs/wk8/LoKU/forget01/seed123/trajectories.json', 'outputs/wk8/LoKU/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_loku_mu_ret": {
+    "value": 0.5503,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/LoKU/forget01/seed42/trajectories.json', 'outputs/wk8/LoKU/forget01/seed123/trajectories.json', 'outputs/wk8/LoKU/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_loku_j_diag": {
+    "value": 0.0013,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/LoKU/forget01/seed42/trajectories.json', 'outputs/wk8/LoKU/forget01/seed123/trajectories.json', 'outputs/wk8/LoKU/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget05_loku_fq_nll": {
+    "value": 0.4876,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/LoKU/forget05/seed42/trajectories.json', 'outputs/wk8/LoKU/forget05/seed123/trajectories.json', 'outputs/wk8/LoKU/forget05/seed456/trajectories.json', 'outputs/wk8/LoKU/forget05/seed789/trajectories.json', 'outputs/wk8/LoKU/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_loku_mu_ret": {
+    "value": 0.5893,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/LoKU/forget05/seed42/trajectories.json', 'outputs/wk8/LoKU/forget05/seed123/trajectories.json', 'outputs/wk8/LoKU/forget05/seed456/trajectories.json', 'outputs/wk8/LoKU/forget05/seed789/trajectories.json', 'outputs/wk8/LoKU/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_loku_j_diag": {
+    "value": 0.2873,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/LoKU/forget05/seed42/trajectories.json', 'outputs/wk8/LoKU/forget05/seed123/trajectories.json', 'outputs/wk8/LoKU/forget05/seed456/trajectories.json', 'outputs/wk8/LoKU/forget05/seed789/trajectories.json', 'outputs/wk8/LoKU/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget10_loku_fq_nll": {
+    "value": 0.0183,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/LoKU/forget10/seed42/trajectories.json', 'outputs/wk8/LoKU/forget10/seed123/trajectories.json', 'outputs/wk8/LoKU/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_loku_mu_ret": {
+    "value": 0.4298,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/LoKU/forget10/seed42/trajectories.json', 'outputs/wk8/LoKU/forget10/seed123/trajectories.json', 'outputs/wk8/LoKU/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_loku_j_diag": {
+    "value": 0.0079,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/LoKU/forget10/seed42/trajectories.json', 'outputs/wk8/LoKU/forget10/seed123/trajectories.json', 'outputs/wk8/LoKU/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_npo_fq_nll": {
+    "value": 0.0371,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/NPO/forget01/seed42/trajectories.json', 'outputs/wk8/NPO/forget01/seed123/trajectories.json', 'outputs/wk8/NPO/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_npo_mu_ret": {
+    "value": 0.1357,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/NPO/forget01/seed42/trajectories.json', 'outputs/wk8/NPO/forget01/seed123/trajectories.json', 'outputs/wk8/NPO/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_npo_j_diag": {
+    "value": 0.005,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/NPO/forget01/seed42/trajectories.json', 'outputs/wk8/NPO/forget01/seed123/trajectories.json', 'outputs/wk8/NPO/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget05_npo_fq_nll": {
+    "value": 0.4628,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/NPO/forget05/seed42/trajectories.json', 'outputs/wk8/NPO/forget05/seed123/trajectories.json', 'outputs/wk8/NPO/forget05/seed456/trajectories.json', 'outputs/wk8/NPO/forget05/seed789/trajectories.json', 'outputs/wk8/NPO/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_npo_mu_ret": {
+    "value": 0.3142,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/NPO/forget05/seed42/trajectories.json', 'outputs/wk8/NPO/forget05/seed123/trajectories.json', 'outputs/wk8/NPO/forget05/seed456/trajectories.json', 'outputs/wk8/NPO/forget05/seed789/trajectories.json', 'outputs/wk8/NPO/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_npo_j_diag": {
+    "value": 0.1454,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/NPO/forget05/seed42/trajectories.json', 'outputs/wk8/NPO/forget05/seed123/trajectories.json', 'outputs/wk8/NPO/forget05/seed456/trajectories.json', 'outputs/wk8/NPO/forget05/seed789/trajectories.json', 'outputs/wk8/NPO/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget10_npo_fq_nll": {
+    "value": 0.0975,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/NPO/forget10/seed42/trajectories.json', 'outputs/wk8/NPO/forget10/seed123/trajectories.json', 'outputs/wk8/NPO/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_npo_mu_ret": {
+    "value": 0.0855,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/NPO/forget10/seed42/trajectories.json', 'outputs/wk8/NPO/forget10/seed123/trajectories.json', 'outputs/wk8/NPO/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_npo_j_diag": {
+    "value": 0.0083,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/NPO/forget10/seed42/trajectories.json', 'outputs/wk8/NPO/forget10/seed123/trajectories.json', 'outputs/wk8/NPO/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_simnpo_fq_nll": {
+    "value": 0.0191,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/SimNPO/forget01/seed42/trajectories.json', 'outputs/wk8/SimNPO/forget01/seed123/trajectories.json', 'outputs/wk8/SimNPO/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_simnpo_mu_ret": {
+    "value": 0.4836,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/SimNPO/forget01/seed42/trajectories.json', 'outputs/wk8/SimNPO/forget01/seed123/trajectories.json', 'outputs/wk8/SimNPO/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_simnpo_j_diag": {
+    "value": 0.0092,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/SimNPO/forget01/seed42/trajectories.json', 'outputs/wk8/SimNPO/forget01/seed123/trajectories.json', 'outputs/wk8/SimNPO/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget05_simnpo_fq_nll": {
+    "value": 0.7136,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/SimNPO/forget05/seed42/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed123/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed456/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed789/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_simnpo_mu_ret": {
+    "value": 0.4265,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/SimNPO/forget05/seed42/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed123/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed456/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed789/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_simnpo_j_diag": {
+    "value": 0.3043,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/SimNPO/forget05/seed42/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed123/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed456/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed789/trajectories.json', 'outputs/wk8/SimNPO/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget10_simnpo_fq_nll": {
+    "value": 0.2408,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/SimNPO/forget10/seed42/trajectories.json', 'outputs/wk8/SimNPO/forget10/seed123/trajectories.json', 'outputs/wk8/SimNPO/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_simnpo_mu_ret": {
+    "value": 0.3001,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/SimNPO/forget10/seed42/trajectories.json', 'outputs/wk8/SimNPO/forget10/seed123/trajectories.json', 'outputs/wk8/SimNPO/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_simnpo_j_diag": {
+    "value": 0.0723,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/SimNPO/forget10/seed42/trajectories.json', 'outputs/wk8/SimNPO/forget10/seed123/trajectories.json', 'outputs/wk8/SimNPO/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_forge_fq_nll": {
+    "value": 0.003,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FORGE/forget01/seed42/trajectories.json', 'outputs/wk8/FORGE/forget01/seed123/trajectories.json', 'outputs/wk8/FORGE/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_forge_mu_ret": {
+    "value": 0.532,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FORGE/forget01/seed42/trajectories.json', 'outputs/wk8/FORGE/forget01/seed123/trajectories.json', 'outputs/wk8/FORGE/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget01_forge_j_diag": {
+    "value": 0.0016,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget01",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FORGE/forget01/seed42/trajectories.json', 'outputs/wk8/FORGE/forget01/seed123/trajectories.json', 'outputs/wk8/FORGE/forget01/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget05_forge_fq_nll": {
+    "value": 0.8693,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FORGE/forget05/seed42/trajectories.json', 'outputs/wk8/FORGE/forget05/seed123/trajectories.json', 'outputs/wk8/FORGE/forget05/seed456/trajectories.json', 'outputs/wk8/FORGE/forget05/seed789/trajectories.json', 'outputs/wk8/FORGE/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_forge_mu_ret": {
+    "value": 0.4903,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FORGE/forget05/seed42/trajectories.json', 'outputs/wk8/FORGE/forget05/seed123/trajectories.json', 'outputs/wk8/FORGE/forget05/seed456/trajectories.json', 'outputs/wk8/FORGE/forget05/seed789/trajectories.json', 'outputs/wk8/FORGE/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget05_forge_j_diag": {
+    "value": 0.4262,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1000
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FORGE/forget05/seed42/trajectories.json', 'outputs/wk8/FORGE/forget05/seed123/trajectories.json', 'outputs/wk8/FORGE/forget05/seed456/trajectories.json', 'outputs/wk8/FORGE/forget05/seed789/trajectories.json', 'outputs/wk8/FORGE/forget05/seed1000/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "main diagnostic table (Table IV/VI)"
+  },
+  "tofu_phi15_forget10_forge_fq_nll": {
+    "value": 0.0337,
+    "metric": "FQ_NLL = KS(NLL_model, NLL_oracle) [diagnostic, NOT official TOFU FQ]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FORGE/forget10/seed42/trajectories.json', 'outputs/wk8/FORGE/forget10/seed123/trajectories.json', 'outputs/wk8/FORGE/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_forge_mu_ret": {
+    "value": 0.4777,
+    "metric": "MU_ret = harmonic_mean(ROUGE-L_retain, PPL_recovery) [diagnostic, NOT official TOFU MU]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FORGE/forget10/seed42/trajectories.json', 'outputs/wk8/FORGE/forget10/seed123/trajectories.json', 'outputs/wk8/FORGE/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget10_forge_j_diag": {
+    "value": 0.0161,
+    "metric": "J_diag = FQ_NLL * MU_ret",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget10",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/wk8/FORGE/forget10/seed42/trajectories.json', 'outputs/wk8/FORGE/forget10/seed123/trajectories.json', 'outputs/wk8/FORGE/forget10/seed456/trajectories.json']",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "cross-split diagnostic table (Table VI)"
+  },
+  "tofu_phi15_forget05_ga_fq_official": {
+    "value": 0.0003,
+    "metric": "FQ_official = KS-test p-value on Truth Ratio distribution vs. retain-only oracle [independent reimplementation of Maini et al. 2024 formula; NOT verified byte-identical to the original authors' reference code, see forge/tofu_official.py docstring]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/GA/forget05/seed42.json', 'outputs/official_tofu/GA/forget05/seed123.json', 'outputs/official_tofu/GA/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_ga_mu_official": {
+    "value": 0.0,
+    "metric": "MU_official = harmonic mean of 9 quantities (ROUGE-L, answer probability, truth-ratio score) x (retain, real_authors, world_facts) [independent reimplementation, same caveat as FQ_official above]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/GA/forget05/seed42.json', 'outputs/official_tofu/GA/forget05/seed123.json', 'outputs/official_tofu/GA/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_gd_fq_official": {
+    "value": 0.9977,
+    "metric": "FQ_official = KS-test p-value on Truth Ratio distribution vs. retain-only oracle [independent reimplementation of Maini et al. 2024 formula; NOT verified byte-identical to the original authors' reference code, see forge/tofu_official.py docstring]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/GD/forget05/seed42.json', 'outputs/official_tofu/GD/forget05/seed123.json', 'outputs/official_tofu/GD/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_gd_mu_official": {
+    "value": 0.3887,
+    "metric": "MU_official = harmonic mean of 9 quantities (ROUGE-L, answer probability, truth-ratio score) x (retain, real_authors, world_facts) [independent reimplementation, same caveat as FQ_official above]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/GD/forget05/seed42.json', 'outputs/official_tofu/GD/forget05/seed123.json', 'outputs/official_tofu/GD/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_kl_fq_official": {
+    "value": 0.6047,
+    "metric": "FQ_official = KS-test p-value on Truth Ratio distribution vs. retain-only oracle [independent reimplementation of Maini et al. 2024 formula; NOT verified byte-identical to the original authors' reference code, see forge/tofu_official.py docstring]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/KL/forget05/seed42.json', 'outputs/official_tofu/KL/forget05/seed123.json', 'outputs/official_tofu/KL/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_kl_mu_official": {
+    "value": 0.3419,
+    "metric": "MU_official = harmonic mean of 9 quantities (ROUGE-L, answer probability, truth-ratio score) x (retain, real_authors, world_facts) [independent reimplementation, same caveat as FQ_official above]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/KL/forget05/seed42.json', 'outputs/official_tofu/KL/forget05/seed123.json', 'outputs/official_tofu/KL/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_flat_fq_official": {
+    "value": 0.9667,
+    "metric": "FQ_official = KS-test p-value on Truth Ratio distribution vs. retain-only oracle [independent reimplementation of Maini et al. 2024 formula; NOT verified byte-identical to the original authors' reference code, see forge/tofu_official.py docstring]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/FLAT/forget05/seed42.json', 'outputs/official_tofu/FLAT/forget05/seed123.json', 'outputs/official_tofu/FLAT/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_flat_mu_official": {
+    "value": 0.3984,
+    "metric": "MU_official = harmonic mean of 9 quantities (ROUGE-L, answer probability, truth-ratio score) x (retain, real_authors, world_facts) [independent reimplementation, same caveat as FQ_official above]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/FLAT/forget05/seed42.json', 'outputs/official_tofu/FLAT/forget05/seed123.json', 'outputs/official_tofu/FLAT/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_loku_fq_official": {
+    "value": 0.9874,
+    "metric": "FQ_official = KS-test p-value on Truth Ratio distribution vs. retain-only oracle [independent reimplementation of Maini et al. 2024 formula; NOT verified byte-identical to the original authors' reference code, see forge/tofu_official.py docstring]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/LoKU/forget05/seed42.json', 'outputs/official_tofu/LoKU/forget05/seed123.json', 'outputs/official_tofu/LoKU/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_loku_mu_official": {
+    "value": 0.3964,
+    "metric": "MU_official = harmonic mean of 9 quantities (ROUGE-L, answer probability, truth-ratio score) x (retain, real_authors, world_facts) [independent reimplementation, same caveat as FQ_official above]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/LoKU/forget05/seed42.json', 'outputs/official_tofu/LoKU/forget05/seed123.json', 'outputs/official_tofu/LoKU/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_npo_fq_official": {
+    "value": 0.9977,
+    "metric": "FQ_official = KS-test p-value on Truth Ratio distribution vs. retain-only oracle [independent reimplementation of Maini et al. 2024 formula; NOT verified byte-identical to the original authors' reference code, see forge/tofu_official.py docstring]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/NPO/forget05/seed42.json', 'outputs/official_tofu/NPO/forget05/seed123.json', 'outputs/official_tofu/NPO/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_npo_mu_official": {
+    "value": 0.3845,
+    "metric": "MU_official = harmonic mean of 9 quantities (ROUGE-L, answer probability, truth-ratio score) x (retain, real_authors, world_facts) [independent reimplementation, same caveat as FQ_official above]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/NPO/forget05/seed42.json', 'outputs/official_tofu/NPO/forget05/seed123.json', 'outputs/official_tofu/NPO/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_simnpo_fq_official": {
+    "value": 0.9667,
+    "metric": "FQ_official = KS-test p-value on Truth Ratio distribution vs. retain-only oracle [independent reimplementation of Maini et al. 2024 formula; NOT verified byte-identical to the original authors' reference code, see forge/tofu_official.py docstring]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/SimNPO/forget05/seed42.json', 'outputs/official_tofu/SimNPO/forget05/seed123.json', 'outputs/official_tofu/SimNPO/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_simnpo_mu_official": {
+    "value": 0.3992,
+    "metric": "MU_official = harmonic mean of 9 quantities (ROUGE-L, answer probability, truth-ratio score) x (retain, real_authors, world_facts) [independent reimplementation, same caveat as FQ_official above]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/SimNPO/forget05/seed42.json', 'outputs/official_tofu/SimNPO/forget05/seed123.json', 'outputs/official_tofu/SimNPO/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_forge_fq_official": {
+    "value": 0.9874,
+    "metric": "FQ_official = KS-test p-value on Truth Ratio distribution vs. retain-only oracle [independent reimplementation of Maini et al. 2024 formula; NOT verified byte-identical to the original authors' reference code, see forge/tofu_official.py docstring]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/FORGE/forget05/seed42.json', 'outputs/official_tofu/FORGE/forget05/seed123.json', 'outputs/official_tofu/FORGE/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "tofu_phi15_forget05_forge_mu_official": {
+    "value": 0.3964,
+    "metric": "MU_official = harmonic mean of 9 quantities (ROUGE-L, answer probability, truth-ratio score) x (retain, real_authors, world_facts) [independent reimplementation, same caveat as FQ_official above]",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "['outputs/official_tofu/FORGE/forget05/seed42.json', 'outputs/official_tofu/FORGE/forget05/seed123.json', 'outputs/official_tofu/FORGE/forget05/seed456.json']",
+    "type": "real_gpu_official_reimplementation",
+    "paper_usage": "official TOFU metrics table"
+  },
+  "robustness_multiseed_forge_gamma0.5_canonical_rouge_leak": {
+    "value": 0.4748,
+    "metric": "ROUGE-L leakage under perturbed prompt, 3-seed mean (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "final training step, std across seeds = 0.0199",
+    "source": "outputs/wk_robustness/gamma_ablation_multiseed.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "robustness ablation table (multi-seed, supersedes single-seed)"
+  },
+  "robustness_multiseed_forge_gamma0.5_token_drop_rouge_leak": {
+    "value": 0.3225,
+    "metric": "ROUGE-L leakage under perturbed prompt, 3-seed mean (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "final training step, std across seeds = 0.0051",
+    "source": "outputs/wk_robustness/gamma_ablation_multiseed.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "robustness ablation table (multi-seed, supersedes single-seed)"
+  },
+  "robustness_multiseed_forge_gamma0.5_word_shuffle_rouge_leak": {
+    "value": 0.289,
+    "metric": "ROUGE-L leakage under perturbed prompt, 3-seed mean (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "final training step, std across seeds = 0.0135",
+    "source": "outputs/wk_robustness/gamma_ablation_multiseed.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "robustness ablation table (multi-seed, supersedes single-seed)"
+  },
+  "robustness_multiseed_forge_gamma0.5_truncation_rouge_leak": {
+    "value": 0.2838,
+    "metric": "ROUGE-L leakage under perturbed prompt, 3-seed mean (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "final training step, std across seeds = 0.0163",
+    "source": "outputs/wk_robustness/gamma_ablation_multiseed.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "robustness ablation table (multi-seed, supersedes single-seed)"
+  },
+  "robustness_multiseed_forge_gamma0_canonical_rouge_leak": {
+    "value": 0.5316,
+    "metric": "ROUGE-L leakage under perturbed prompt, 3-seed mean (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "final training step, std across seeds = 0.0139",
+    "source": "outputs/wk_robustness/gamma_ablation_multiseed.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "robustness ablation table (multi-seed, supersedes single-seed)"
+  },
+  "robustness_multiseed_forge_gamma0_token_drop_rouge_leak": {
+    "value": 0.358,
+    "metric": "ROUGE-L leakage under perturbed prompt, 3-seed mean (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "final training step, std across seeds = 0.0119",
+    "source": "outputs/wk_robustness/gamma_ablation_multiseed.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "robustness ablation table (multi-seed, supersedes single-seed)"
+  },
+  "robustness_multiseed_forge_gamma0_word_shuffle_rouge_leak": {
+    "value": 0.3204,
+    "metric": "ROUGE-L leakage under perturbed prompt, 3-seed mean (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "final training step, std across seeds = 0.0044",
+    "source": "outputs/wk_robustness/gamma_ablation_multiseed.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "robustness ablation table (multi-seed, supersedes single-seed)"
+  },
+  "robustness_multiseed_forge_gamma0_truncation_rouge_leak": {
+    "value": 0.3222,
+    "metric": "ROUGE-L leakage under perturbed prompt, 3-seed mean (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "final training step, std across seeds = 0.0051",
+    "source": "outputs/wk_robustness/gamma_ablation_multiseed.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "robustness ablation table (multi-seed, supersedes single-seed)"
+  },
+  "wmdp_cyber_ga_acc": {
+    "value": 0.278,
+    "metric": "WMDP-cyber MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_cyber",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/cyber/wmdp_summary.json",
+    "type": "real_gpu_corpus_based",
+    "paper_usage": "WMDP corrected table (cyber)"
+  },
+  "wmdp_cyber_npo_acc": {
+    "value": 0.314,
+    "metric": "WMDP-cyber MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_cyber",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/cyber/wmdp_summary.json",
+    "type": "real_gpu_corpus_based",
+    "paper_usage": "WMDP corrected table (cyber)"
+  },
+  "wmdp_cyber_simnpo_acc": {
+    "value": 0.334,
+    "metric": "WMDP-cyber MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_cyber",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/cyber/wmdp_summary.json",
+    "type": "real_gpu_corpus_based",
+    "paper_usage": "WMDP corrected table (cyber)"
+  },
+  "wmdp_cyber_flat_acc": {
+    "value": 0.336,
+    "metric": "WMDP-cyber MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_cyber",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/cyber/wmdp_summary.json",
+    "type": "real_gpu_corpus_based",
+    "paper_usage": "WMDP corrected table (cyber)"
+  },
+  "wmdp_cyber_loku_acc": {
+    "value": 0.32,
+    "metric": "WMDP-cyber MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_cyber",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/cyber/wmdp_summary.json",
+    "type": "real_gpu_corpus_based",
+    "paper_usage": "WMDP corrected table (cyber)"
+  },
+  "wmdp_cyber_forge_acc": {
+    "value": 0.322,
+    "metric": "WMDP-cyber MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_cyber",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/cyber/wmdp_summary.json",
+    "type": "real_gpu_corpus_based",
+    "paper_usage": "WMDP corrected table (cyber)"
+  },
+  "wmdp_cyber_rmu_acc": {
+    "value": 0.326,
+    "metric": "WMDP-cyber MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_cyber",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/cyber/wmdp_summary.json",
+    "type": "real_gpu_corpus_based",
+    "paper_usage": "WMDP corrected table (cyber)"
+  },
+  "wmdp_bio_ga_acc": {
+    "value": 0.26,
+    "metric": "WMDP-bio MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_bio",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/bio/wmdp_summary.json",
+    "type": "real_gpu_mcq_heldout_substitute",
+    "paper_usage": "WMDP corrected table (bio)"
+  },
+  "wmdp_bio_npo_acc": {
+    "value": 0.38,
+    "metric": "WMDP-bio MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_bio",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/bio/wmdp_summary.json",
+    "type": "real_gpu_mcq_heldout_substitute",
+    "paper_usage": "WMDP corrected table (bio)"
+  },
+  "wmdp_bio_simnpo_acc": {
+    "value": 0.448,
+    "metric": "WMDP-bio MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_bio",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/bio/wmdp_summary.json",
+    "type": "real_gpu_mcq_heldout_substitute",
+    "paper_usage": "WMDP corrected table (bio)"
+  },
+  "wmdp_bio_flat_acc": {
+    "value": 0.404,
+    "metric": "WMDP-bio MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_bio",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/bio/wmdp_summary.json",
+    "type": "real_gpu_mcq_heldout_substitute",
+    "paper_usage": "WMDP corrected table (bio)"
+  },
+  "wmdp_bio_loku_acc": {
+    "value": 0.38,
+    "metric": "WMDP-bio MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_bio",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/bio/wmdp_summary.json",
+    "type": "real_gpu_mcq_heldout_substitute",
+    "paper_usage": "WMDP corrected table (bio)"
+  },
+  "wmdp_bio_forge_acc": {
+    "value": 0.392,
+    "metric": "WMDP-bio MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_bio",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/bio/wmdp_summary.json",
+    "type": "real_gpu_mcq_heldout_substitute",
+    "paper_usage": "WMDP corrected table (bio)"
+  },
+  "wmdp_bio_rmu_acc": {
+    "value": 0.436,
+    "metric": "WMDP-bio MCQ accuracy (zero-shot on held-out set)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "wmdp_bio",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (200 steps), single seed",
+    "source": "outputs/wk_wmdp_fix/bio/wmdp_summary.json",
+    "type": "real_gpu_mcq_heldout_substitute",
+    "paper_usage": "WMDP corrected table (bio)"
+  },
+  "muse_news_ga_verbmem": {
+    "value": 0.0,
+    "metric": "VerbMem (n-gram overlap, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_ga_knowmem": {
+    "value": 0.0,
+    "metric": "KnowMem (ROUGE-L on QA, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_npo_verbmem": {
+    "value": 0.0,
+    "metric": "VerbMem (n-gram overlap, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_npo_knowmem": {
+    "value": 0.0,
+    "metric": "KnowMem (ROUGE-L on QA, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_simnpo_verbmem": {
+    "value": 0.0,
+    "metric": "VerbMem (n-gram overlap, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_simnpo_knowmem": {
+    "value": 0.0074962518740629685,
+    "metric": "KnowMem (ROUGE-L on QA, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_flat_verbmem": {
+    "value": 0.015696123625627053,
+    "metric": "VerbMem (n-gram overlap, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_flat_knowmem": {
+    "value": 0.03535873054839887,
+    "metric": "KnowMem (ROUGE-L on QA, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_loku_verbmem": {
+    "value": 0.1667616509622137,
+    "metric": "VerbMem (n-gram overlap, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_loku_knowmem": {
+    "value": 0.032246124648298555,
+    "metric": "KnowMem (ROUGE-L on QA, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_forge_verbmem": {
+    "value": 0.04593775634699669,
+    "metric": "VerbMem (n-gram overlap, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "muse_news_forge_knowmem": {
+    "value": 0.02474935283680911,
+    "metric": "KnowMem (ROUGE-L on QA, real muse-bench/MUSE-News corpus)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "muse_news",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "final training step (250 steps), single seed",
+    "source": "outputs/wk_muse_fix/muse_summary.json",
+    "type": "real_gpu_real_data",
+    "paper_usage": "MUSE-News corrected table"
+  },
+  "robustness_forge_gamma0.5_canonical_rouge_leak": {
+    "value": 0.4703,
+    "metric": "ROUGE-L leakage under perturbed prompt (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_robustness/gamma_ablation.json",
+    "type": "real_gpu_diagnostic_single_seed",
+    "paper_usage": "robustness ablation table"
+  },
+  "robustness_forge_gamma0.5_token_drop_rouge_leak": {
+    "value": 0.3259,
+    "metric": "ROUGE-L leakage under perturbed prompt (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_robustness/gamma_ablation.json",
+    "type": "real_gpu_diagnostic_single_seed",
+    "paper_usage": "robustness ablation table"
+  },
+  "robustness_forge_gamma0.5_word_shuffle_rouge_leak": {
+    "value": 0.3081,
+    "metric": "ROUGE-L leakage under perturbed prompt (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_robustness/gamma_ablation.json",
+    "type": "real_gpu_diagnostic_single_seed",
+    "paper_usage": "robustness ablation table"
+  },
+  "robustness_forge_gamma0.5_truncation_rouge_leak": {
+    "value": 0.2966,
+    "metric": "ROUGE-L leakage under perturbed prompt (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_robustness/gamma_ablation.json",
+    "type": "real_gpu_diagnostic_single_seed",
+    "paper_usage": "robustness ablation table"
+  },
+  "robustness_forge_gamma0_canonical_rouge_leak": {
+    "value": 0.54,
+    "metric": "ROUGE-L leakage under perturbed prompt (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_robustness/gamma_ablation.json",
+    "type": "real_gpu_diagnostic_single_seed",
+    "paper_usage": "robustness ablation table"
+  },
+  "robustness_forge_gamma0_token_drop_rouge_leak": {
+    "value": 0.354,
+    "metric": "ROUGE-L leakage under perturbed prompt (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_robustness/gamma_ablation.json",
+    "type": "real_gpu_diagnostic_single_seed",
+    "paper_usage": "robustness ablation table"
+  },
+  "robustness_forge_gamma0_word_shuffle_rouge_leak": {
+    "value": 0.3171,
+    "metric": "ROUGE-L leakage under perturbed prompt (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_robustness/gamma_ablation.json",
+    "type": "real_gpu_diagnostic_single_seed",
+    "paper_usage": "robustness ablation table"
+  },
+  "robustness_forge_gamma0_truncation_rouge_leak": {
+    "value": 0.329,
+    "metric": "ROUGE-L leakage under perturbed prompt (diagnostic)",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_robustness/gamma_ablation.json",
+    "type": "real_gpu_diagnostic_single_seed",
+    "paper_usage": "robustness ablation table"
+  },
+  "llama7b_forget05_ga_fq_nll": {
+    "value": 0.0217,
+    "metric": "FQ_NLL (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_ga_mu_ret": {
+    "value": 0.642,
+    "metric": "MU_ret (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_gd_fq_nll": {
+    "value": 0.0371,
+    "metric": "FQ_NLL (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_gd_mu_ret": {
+    "value": 0.621,
+    "metric": "MU_ret (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_kl_fq_nll": {
+    "value": 0.1786,
+    "metric": "FQ_NLL (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_kl_mu_ret": {
+    "value": 0.4423,
+    "metric": "MU_ret (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_flat_fq_nll": {
+    "value": 0.0217,
+    "metric": "FQ_NLL (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_flat_mu_ret": {
+    "value": 0.642,
+    "metric": "MU_ret (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_loku_fq_nll": {
+    "value": 0.3133,
+    "metric": "FQ_NLL (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_loku_mu_ret": {
+    "value": 0.646,
+    "metric": "MU_ret (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_forge_fq_nll": {
+    "value": 0.2719,
+    "metric": "FQ_NLL (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_forge_mu_ret": {
+    "value": 0.6346,
+    "metric": "MU_ret (diagnostic, 7B scale)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk_llama/*/forget05/seed*/trajectories.json (recomputed)",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Llama-2-7B scale table"
+  },
+  "llama7b_forget05_npo_fq_nll": {
+    "value": 0.0,
+    "metric": "FQ_NLL (diagnostic, 7B scale) \u2014 negative result: 0.000 across all 21 checkpoints (5-step resolution)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/probe/llama_NPO_fine/trajectories.json",
+    "type": "real_gpu_diagnostic_single_seed_negative_result",
+    "paper_usage": "Llama-2-7B scale table (negative-result footnote)"
+  },
+  "llama7b_forget05_simnpo_fq_nll": {
+    "value": 0.0,
+    "metric": "FQ_NLL (diagnostic, 7B scale) \u2014 negative result: 0.000 across all 21 checkpoints (5-step resolution)",
+    "model": "locuslab/tofu_ft_llama2-7b",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/probe/llama_SimNPO_fine/trajectories.json",
+    "type": "real_gpu_diagnostic_single_seed_negative_result",
+    "paper_usage": "Llama-2-7B scale table (negative-result footnote)"
+  },
+  "cost_forge_lora_r32": {
+    "value": {
+      "trainable_params": 6291456,
+      "total_params": 1424562176,
+      "trainable_pct": 0.4416,
+      "peak_vram_gb": 4.61,
+      "sec_per_step": 0.1525
+    },
+    "metric": "Trainable params / peak VRAM / sec-per-step",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk9/cost_analysis.json",
+    "type": "real_gpu_cost",
+    "paper_usage": "Table IX (unchanged)"
+  },
+  "cost_full_retrain": {
+    "value": {
+      "trainable_params": 1418270720,
+      "total_params": 1418270720,
+      "trainable_pct": 100.0,
+      "peak_vram_gb": 14.25,
+      "sec_per_step": 0.3279
+    },
+    "metric": "Trainable params / peak VRAM / sec-per-step",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk9/cost_analysis.json",
+    "type": "real_gpu_cost",
+    "paper_usage": "Table IX (unchanged)"
+  },
+  "sequential_ga_delta_fq": {
+    "value": 0.009878183186176536,
+    "metric": "|FQ_NLL(half-A) drift after stage-2 unlearning|",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05_halves",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk9/sequential_GA/GA_sequential.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Table X (unchanged)"
+  },
+  "sequential_loku_delta_fq": {
+    "value": 0.03638053596062817,
+    "metric": "|FQ_NLL(half-A) drift after stage-2 unlearning|",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05_halves",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk9/sequential_LoKU/LoKU_sequential.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Table X (unchanged)"
+  },
+  "sequential_forge_delta_fq": {
+    "value": 0.047768045509440735,
+    "metric": "|FQ_NLL(half-A) drift after stage-2 unlearning|",
+    "model": "locuslab/tofu_ft_phi-1.5",
+    "split": "forget05_halves",
+    "seeds": [
+      42
+    ],
+    "checkpoint_rule": "argmax_t(FQ_NLL_t * MU_ret_t) per seed (forge/stats.py::_select_checkpoint)",
+    "source": "outputs/wk9/sequential_FORGE/FORGE_sequential.json",
+    "type": "real_gpu_diagnostic",
+    "paper_usage": "Table X (unchanged)"
+  }
+}

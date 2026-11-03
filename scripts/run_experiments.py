@@ -29,6 +29,7 @@ Output per run:
 
 import argparse
 import copy
+import hashlib
 import json
 import math
 import os
@@ -165,6 +166,45 @@ def load_tofu(forget_split="forget05"):
     return forget, retain
 
 
+# ── Deterministic, non-overlapping validation / final-reporting probe split ───
+# Evidence-remediation fix (Phase 1, task 2): the prior pipeline reused the same
+# forget_ex[:n]/retain_ex[:n] slice both to drive checkpoint selection (argmax
+# FQ*MU over the trajectory) and as "the" reported value at the selected step.
+# load_tofu() iterates the HF dataset in a fixed order with no shuffling, so
+# index-based slicing here is fully deterministic and reproducible across every
+# run of a given split -- no run-to-run randomness, and every method/seed sees
+# the identical validation and reporting probes for a given split.
+
+def _question_id(question: str) -> str:
+    """Stable, content-addressed ID for a question (first 12 hex chars of sha256)."""
+    return hashlib.sha256(question.encode("utf-8")).hexdigest()[:12]
+
+
+def _split_hash(examples) -> str:
+    """Fingerprint of a probe split: sha256 over the sorted question IDs it contains."""
+    ids = sorted(_question_id(e.question) for e in examples)
+    return hashlib.sha256("\n".join(ids).encode("utf-8")).hexdigest()
+
+
+def make_probe_splits(examples, n_val=50, n_report=50):
+    """Disjoint validation (checkpoint-selection) and final-reporting probe
+    splits from the front of `examples`, deterministic by index position.
+    Returns (val_examples, val_ids, val_hash, report_examples, report_ids, report_hash).
+    Raises if there are not enough examples to carve both splits disjointly.
+    """
+    if len(examples) < n_val + n_report:
+        raise ValueError(
+            f"Not enough examples ({len(examples)}) to carve disjoint validation "
+            f"(n={n_val}) and reporting (n={n_report}) probes without overlap."
+        )
+    val_ex = examples[:n_val]
+    report_ex = examples[n_val:n_val + n_report]
+    val_ids = [_question_id(e.question) for e in val_ex]
+    report_ids = [_question_id(e.question) for e in report_ex]
+    assert not (set(val_ids) & set(report_ids)), "validation/reporting probe overlap detected"
+    return val_ex, val_ids, _split_hash(val_ex), report_ex, report_ids, _split_hash(report_ex)
+
+
 # ── Dataset ───────────────────────────────────────────────────────────────────
 
 class QADataset(Dataset):
@@ -286,7 +326,12 @@ def loss_GA(model, ref, f_batch, r_batch, device):
                   labels=f_batch["labels"].to(device)).loss
 
 
-def loss_NPO(model, ref, f_batch, r_batch, device, beta=0.1):
+def loss_NPO(model, ref, f_batch, r_batch, device, beta=2.5):
+    # beta=0.1 (this repo's original default) amplifies the loss by 2/beta=20x under
+    # the shared lr=2e-5 config, causing catastrophic collapse within ~100-150 steps
+    # (confirmed empirically: MU/ROUGE crash to 0.000, see outputs/probe/npo_beta*.
+    # beta=2.5 keeps NPO's peak joint FQ*MU operating point (~0.33 around step 35-65
+    # of 250) intact instead of blowing past it before any checkpoint captures it.
     out     = model(input_ids=f_batch["input_ids"].to(device),
                     attention_mask=f_batch["attention_mask"].to(device))
     with torch.no_grad():
@@ -299,6 +344,26 @@ def loss_NPO(model, ref, f_batch, r_batch, device, beta=0.1):
     rlogp  = F.log_softmax(ref_out.logits[..., :-1, :], dim=-1).gather(-1, tgt_c.unsqueeze(-1)).squeeze(-1)
     ratio  = ((logp - rlogp) * mask).sum(-1) / (mask.sum(-1) + 1e-8)
     return (-2.0 / beta * torch.log(torch.sigmoid(-beta * ratio) + 1e-8)).mean()
+
+
+def loss_SimNPO(model, ref, f_batch, r_batch, device, beta=2.5, gamma=0.0, lam=1.0):
+    """SimNPO (Fan et al., NeurIPS 2025, arXiv:2410.07163) — reference-free,
+    length-normalized, margin-scaled saturating ascent. No reference model needed.
+
+    L_f = E[-2/beta * log sigmoid(beta*u - gamma)],  u = per-sample length-normalized forget NLL.
+    """
+    out   = model(input_ids=f_batch["input_ids"].to(device),
+                  attention_mask=f_batch["attention_mask"].to(device))
+    tgts  = f_batch["labels"].to(device)[..., 1:]
+    mask  = (tgts != -100).float()
+    tgt_c = tgts.masked_fill(tgts == -100, 0)
+    logp  = F.log_softmax(out.logits[..., :-1, :], dim=-1).gather(-1, tgt_c.unsqueeze(-1)).squeeze(-1)
+    u     = -((logp * mask).sum(-1) / (mask.sum(-1) + 1e-8))  # length-normalized forget NLL per sample
+    l_f   = (-2.0 / beta * torch.log(torch.sigmoid(beta * u - gamma) + 1e-8)).mean()
+    l_r   = model(input_ids=r_batch["input_ids"].to(device),
+                  attention_mask=r_batch["attention_mask"].to(device),
+                  labels=r_batch["labels"].to(device)).loss
+    return l_f + lam * l_r
 
 
 def loss_GD(model, ref, f_batch, r_batch, device):
@@ -412,6 +477,7 @@ METHOD_LOSSES = {
     "GD":     loss_GD,
     "KL":     loss_KL,
     "NPO":    loss_NPO,
+    "SimNPO": loss_SimNPO,
     "FLAT":   loss_FLAT,
     "LoKU":   loss_LoKU,
     "FORGE":  loss_FORGE,
@@ -441,7 +507,48 @@ def train_method(method_name, base_state, ref_model, forget_ex, retain_ex,
                  n_steps=60, eval_every=10, lr=5e-6,
                  batch_size=4, max_length=128,
                  out_dir=None, lora_rank=16, use_lora=True,
-                 n_eval=25, model_name="gpt2", loss_kwargs=None):
+                 n_eval=25, model_name="gpt2", loss_kwargs=None,
+                 val_probes=None, report_probes=None,
+                 save_all_steps=False, run_id=None, seed=None, base_model_revision=None,
+                 tokenizer_revision=None, code_sha256=None, config_sha256=None):
+    """
+    Evidence-remediation fix (Phase 1, tasks 1-3): previously this function (a)
+    saved model.save_pretrained() unconditionally at the FINAL training step
+    regardless of which step was later identified as the best validation
+    checkpoint, and (b) evaluated every trajectory point -- including the one
+    eventually "selected" -- on the same forget_ex[:n]/retain_ex[:n] slice used
+    throughout training, with no probe held out purely for final reporting.
+
+    Now:
+      - `val_probes` = (val_forget_ex, val_retain_ex, val_forget_ids, val_retain_ids,
+        val_forget_hash, val_retain_hash): used for every trajectory checkpoint
+        and for argmax(FQ*MU) selection. Falls back to forget_ex/retain_ex
+        (legacy behavior) if not provided, e.g. for the synthetic smoke mode.
+      - `report_probes`: same shape, DISJOINT from val_probes, used exactly
+        once -- after training ends and the best-validation LoRA state is
+        restored -- to compute the number that should actually be reported.
+        Never used for selection.
+      - Both the final-step and the validation-selected LoRA state are saved
+        to disk as separate, clearly-named checkpoints; neither overwrites
+        the other. A JSON manifest records selected/final step, checkpoint
+        paths, LoRA-weight sha256, and the probe split identities/hashes.
+
+    Phase 2C addition (Task B): when `save_all_steps=True`, every scheduled
+    `checkpoint()` call ALSO saves that step's live LoRA state to
+    `{out_dir}/{method_name}_step{N}/`, in addition to the existing
+    final/selected saves below -- purely additive I/O, no change to the
+    training loop, loss, optimizer, scheduler, or data order (see
+    PHASE2C_PROTOCOL.md Sec. 12 for the verified claim that in-loop eval does
+    not perturb training-mode or RNG state). Only the adapter state_dict and
+    its config are saved per step -- NOT optimizer/scheduler/RNG/dataloader
+    state, so this does not support exact bit-for-bit training resumption,
+    only post-hoc evaluation of each step's weights. Per-step identity
+    records (manifest["all_step_manifests"]) carry method/seed/run_id/step,
+    adapter path+sha256, base-model/tokenizer revisions, and code/config
+    hashes, all passed in by the caller rather than re-derived here.
+
+    Returns (trajectory, manifest_dict).
+    """
     loss_kwargs = loss_kwargs or {}
 
     print(f"\n{'='*60}\nMethod: {method_name}\n{'='*60}")
@@ -477,14 +584,52 @@ def train_method(method_name, base_state, ref_model, forget_ex, retain_ex,
     loss_fn   = METHOD_LOSSES[method_name]
     trajectory = []
 
+    if val_probes is not None:
+        val_f, val_r, val_f_ids, val_r_ids, val_f_hash, val_r_hash = val_probes
+    else:
+        val_f, val_r = forget_ex, retain_ex
+        val_f_ids = val_r_ids = val_f_hash = val_r_hash = None
+
+    best_j = -1.0
+    best_step = None
+    best_state = None  # LoRA-only state_dict at the best validation checkpoint
+    step_manifests = []  # Phase 2C, Task B: one entry per saved intermediate step
+
     def checkpoint(step):
-        m = measure_metrics(model, ref_model, tokenizer, forget_ex, retain_ex,
+        nonlocal best_j, best_step, best_state
+        m = measure_metrics(model, ref_model, tokenizer, val_f, val_r,
                             device, n=n_eval, max_length=max_length)
         m["step"] = step
         trajectory.append(m)
-        print(f"  step {step:>4d}  FQ={m['fq']:.3f}  MU={m['mu']:.3f}  "
+        j = m["fq"] * m["mu"]
+        if j > best_j:
+            best_j = j
+            best_step = step
+            best_state = {k: v.detach().clone().cpu()
+                          for k, v in model.state_dict().items() if "lora" in k.lower()}
+        print(f"  step {step:>4d}  FQ={m['fq']:.3f}  MU={m['mu']:.3f}  J={j:.4f}  "
               f"RL-f={m['rouge_forget']:.3f}  RL-r={m['rouge_retain']:.3f}  "
               f"MIA-TR={m['mia_tr']:.3f}  MIA-PR={m['mia_pr']:.3f}")
+
+        if save_all_steps and out_dir:
+            step_dir = Path(out_dir) / f"{method_name}_step{step}"
+            step_dir.mkdir(parents=True, exist_ok=True)
+            if hasattr(model, "save_pretrained"):
+                model.save_pretrained(step_dir)
+            else:
+                torch.save(model.state_dict(), step_dir / "model.pt")
+            step_manifests.append({
+                "method": method_name, "seed": seed, "run_id": run_id, "step": step,
+                "adapter_path": str(step_dir), "adapter_sha256": _hash_checkpoint_dir(step_dir),
+                "base_model_revision": base_model_revision, "tokenizer_revision": tokenizer_revision,
+                "code_sha256": code_sha256, "config_sha256": config_sha256,
+                "fq_nll": m["fq"], "mu_ret": m["mu"], "j_diag": j,
+                "resumable_for_exact_training_replay": False,
+                "resumable_for_exact_training_replay_note": (
+                    "adapter weights + config only; no optimizer/scheduler/RNG/dataloader "
+                    "state saved -- NOT a full resumable training checkpoint"),
+            })
+            print(f"    saved step-{step} checkpoint -> {step_dir}")
         return m
 
     checkpoint(0)
@@ -507,16 +652,106 @@ def train_method(method_name, base_state, ref_model, forget_ex, retain_ex,
         if step % eval_every == 0:
             checkpoint(step)
 
-    if out_dir:
-        ckpt = Path(out_dir) / method_name
-        ckpt.mkdir(parents=True, exist_ok=True)
-        if hasattr(model, "save_pretrained"):
-            model.save_pretrained(ckpt)
-        else:
-            torch.save(model.state_dict(), ckpt / "model.pt")
-        print(f"  Checkpoint → {ckpt}")
+    manifest = {
+        "method": method_name,
+        "selected_step": best_step,
+        "selected_j_diag_val": best_j,
+        "final_step": n_steps,
+        "validation_probe": {
+            "n_forget": len(val_f), "n_retain": len(val_r),
+            "forget_question_ids": val_f_ids, "retain_question_ids": val_r_ids,
+            "forget_split_hash": val_f_hash, "retain_split_hash": val_r_hash,
+        },
+        "report_probe": None,
+        "final_checkpoint_path": None, "final_checkpoint_sha256": None,
+        "selected_checkpoint_path": None, "selected_checkpoint_sha256": None,
+        "reported_metrics": {
+            "note": "computed on the report_probes (held out from checkpoint selection) "
+                    "at the validation-selected checkpoint; this, not the validation-probe "
+                    "value above, is the number that should be published.",
+        },
+        "all_step_manifests": step_manifests,
+        "run_id": run_id, "seed": seed,
+        "base_model_revision": base_model_revision, "tokenizer_revision": tokenizer_revision,
+        "code_sha256": code_sha256, "config_sha256": config_sha256,
+    }
 
-    return trajectory
+    if out_dir:
+        out_dir = Path(out_dir)
+
+        # 1. Save the FINAL-step state (model is still here right after the loop).
+        final_ckpt = out_dir / f"{method_name}_final"
+        final_ckpt.mkdir(parents=True, exist_ok=True)
+        if hasattr(model, "save_pretrained"):
+            model.save_pretrained(final_ckpt)
+        else:
+            torch.save(model.state_dict(), final_ckpt / "model.pt")
+        manifest["final_checkpoint_path"] = str(final_ckpt)
+        manifest["final_checkpoint_sha256"] = _hash_checkpoint_dir(final_ckpt)
+        print(f"  Final-step checkpoint -> {final_ckpt}")
+
+        # 2. Restore the best-validation LoRA state (if one was tracked) and save it
+        #    separately -- this is the checkpoint diagnostic AND official-metric
+        #    evaluation should both load.
+        if best_state is not None:
+            sd = model.state_dict()
+            for k, v in best_state.items():
+                sd[k] = v.to(device)
+            model.load_state_dict(sd, strict=False)
+
+        selected_ckpt = out_dir / f"{method_name}_selected"
+        selected_ckpt.mkdir(parents=True, exist_ok=True)
+        if hasattr(model, "save_pretrained"):
+            model.save_pretrained(selected_ckpt)
+        else:
+            torch.save(model.state_dict(), selected_ckpt / "model.pt")
+        manifest["selected_checkpoint_path"] = str(selected_ckpt)
+        manifest["selected_checkpoint_sha256"] = _hash_checkpoint_dir(selected_ckpt)
+        print(f"  Selected (t*={best_step}) checkpoint -> {selected_ckpt}")
+
+        # 3. Final-reporting measurement on the restored, selected-checkpoint model,
+        #    using the probe set that was NEVER used for selection.
+        if report_probes is not None:
+            rep_f, rep_r, rep_f_ids, rep_r_ids, rep_f_hash, rep_r_hash = report_probes
+            rep_m = measure_metrics(model, ref_model, tokenizer, rep_f, rep_r,
+                                    device, n=n_eval, max_length=max_length)
+            manifest["report_probe"] = {
+                "n_forget": len(rep_f), "n_retain": len(rep_r),
+                "forget_question_ids": rep_f_ids, "retain_question_ids": rep_r_ids,
+                "forget_split_hash": rep_f_hash, "retain_split_hash": rep_r_hash,
+            }
+            manifest["reported_metrics"].update({
+                "fq_nll": rep_m["fq"], "mu_ret": rep_m["mu"],
+                "j_diag": rep_m["fq"] * rep_m["mu"],
+                "rouge_forget": rep_m["rouge_forget"], "rouge_retain": rep_m["rouge_retain"],
+            })
+            print(f"  Held-out report-probe metrics @ t*={best_step}: "
+                  f"FQ={rep_m['fq']:.4f}  MU={rep_m['mu']:.4f}  J={rep_m['fq']*rep_m['mu']:.4f}")
+        else:
+            manifest["reported_metrics"]["note"] += (
+                " WARNING: no report_probes given to train_method(); no held-out "
+                "reported_metrics were computed. Do not substitute the validation-probe "
+                "value for a 'reported' number -- that is exactly the leakage this fix "
+                "exists to remove. Treat this run as incomplete for publication purposes."
+            )
+
+        json.dump(manifest, open(out_dir / f"{method_name}_checkpoint_manifest.json", "w"), indent=2)
+        print(f"  Checkpoint manifest -> {out_dir / f'{method_name}_checkpoint_manifest.json'}")
+
+    return trajectory, manifest
+
+
+def _hash_checkpoint_dir(ckpt_dir: Path) -> str:
+    """sha256 of the actual LoRA weight file in a saved checkpoint directory
+    (adapter_model.safetensors, or model.pt as a fallback), so checkpoint
+    identity can be verified independently of the directory path/mtime."""
+    for name in ("adapter_model.safetensors", "model.pt", "adapter_model.bin"):
+        p = ckpt_dir / name
+        if p.exists():
+            h = hashlib.sha256()
+            h.update(p.read_bytes())
+            return h.hexdigest()
+    return None
 
 
 # ── Plotting + IO ─────────────────────────────────────────────────────────────
@@ -582,6 +817,19 @@ def write_csv(all_traj, out_path):
     print(f"CSV → {out_path}")
 
 
+def _build_loss_kwargs(method, args):
+    kwargs = {}
+    if args.margin is not None and method in ("LoKU", "FORGEH"):
+        kwargs["margin"] = args.margin
+    if args.beta is not None and method in ("NPO", "SimNPO", "FLAT"):
+        kwargs["beta"] = args.beta
+    if args.gamma_npo is not None and method == "SimNPO":
+        kwargs["gamma"] = args.gamma_npo
+    if args.gamma_forge is not None and method in ("FORGE", "FORGEH"):
+        kwargs["gamma"] = args.gamma_forge
+    return kwargs
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -606,7 +854,20 @@ def main():
     p.add_argument("--rank",       type=int,   default=None)
     p.add_argument("--margin",     type=float, default=None,
                    help="Clamp margin for LoKU/FORGEH (set near oracle NLL ~2.3)")
+    p.add_argument("--beta",       type=float, default=None,
+                   help="Beta for NPO/SimNPO/FLAT (overrides loss function default)")
+    p.add_argument("--gamma_npo",  type=float, default=None,
+                   help="Gamma margin for SimNPO (overrides loss function default)")
+    p.add_argument("--gamma_forge", type=float, default=None,
+                   help="Robust-term weight for FORGE/FORGEH (0.0 disables L_rob for the ablation)")
     p.add_argument("--seed",       type=int,   default=42)
+    p.add_argument("--save_all_steps", action="store_true", default=False,
+                   help="Phase 2C, Task B: save every scheduled checkpoint's LoRA state "
+                        "(not just final+selected). Purely additive I/O; off by default so "
+                        "every other caller of this script keeps existing behavior unchanged.")
+    p.add_argument("--run_id", default=None,
+                   help="Unique identity label for this training execution, recorded in "
+                        "per-step manifests. Auto-generated (uuid4 hex) if omitted.")
     args = p.parse_args()
 
     # Resolve methods list
@@ -633,6 +894,13 @@ def main():
               f"({torch.cuda.get_device_properties(0).total_memory // 1024**3} GB)")
     else:
         print("Device: CPU")
+
+    # val_probes/report_probes default to None (legacy fallback inside train_method);
+    # only "full" mode currently constructs a real disjoint split (task 2 of the
+    # evidence-remediation fix). Smoke mode uses synthetic data and is not used for
+    # reported results, so it keeps the legacy single-probe behavior.
+    val_probes = None
+    report_probes = None
 
     # ── Smoke mode ────────────────────────────────────────────────────────────
     if args.mode == "smoke":
@@ -785,14 +1053,58 @@ def main():
         n_eval     = 50
         lr         = args.lr or float(cfg.get("lr", 5e-6))
 
+        # Evidence-remediation fix (Phase 1, task 2): carve disjoint validation
+        # (checkpoint-selection) and final-reporting probes, once per run, shared
+        # identically across every method in `methods` for comparability. Sized
+        # adaptively so small splits (e.g. forget01, 40 examples) still get a
+        # non-overlapping split instead of raising.
+        def _probe_sizes(n_examples, target=n_eval):
+            n_val = min(target, max(1, n_examples // 2))
+            n_report = min(target, n_examples - n_val)
+            return n_val, n_report
+
+        nv_f, nr_f = _probe_sizes(len(forget_ex))
+        nv_r, nr_r = _probe_sizes(len(retain_ex))
+        val_f_ex, val_f_ids, val_f_hash, rep_f_ex, rep_f_ids, rep_f_hash = make_probe_splits(forget_ex, nv_f, nr_f)
+        val_r_ex, val_r_ids, val_r_hash, rep_r_ex, rep_r_ids, rep_r_hash = make_probe_splits(retain_ex, nv_r, nr_r)
+        val_probes = (val_f_ex, val_r_ex, val_f_ids, val_r_ids, val_f_hash, val_r_hash)
+        report_probes = (rep_f_ex, rep_r_ex, rep_f_ids, rep_r_ids, rep_f_hash, rep_r_hash)
+        print(f"Probe split: validation forget={len(val_f_ex)} retain={len(val_r_ex)} "
+              f"(hash {val_f_hash[:8]}/{val_r_hash[:8]}) | reporting forget={len(rep_f_ex)} "
+              f"retain={len(rep_r_ex)} (hash {rep_f_hash[:8]}/{rep_r_hash[:8]}) -- disjoint, verified in make_probe_splits()")
+
     # ── Run methods ───────────────────────────────────────────────────────────
     lora_rank = args.rank or int(cfg.get("lora_rank", 32))
     all_trajectories = {}
+    all_manifests = {}
     t0 = time.time()
+
+    run_id = None
+    base_model_revision = tokenizer_revision = code_sha256 = config_sha256 = None
+    if args.save_all_steps:
+        import uuid
+        run_id = args.run_id or uuid.uuid4().hex
+        try:
+            from huggingface_hub import HfApi
+            _api = HfApi()
+            base_model_revision = _api.model_info(model_name).sha
+        except Exception as e:
+            base_model_revision = f"UNRESOLVED ({e})"
+        try:
+            tok_src = getattr(tokenizer, "name_or_path", None)
+            tokenizer_revision = HfApi().model_info(tok_src).sha if tok_src else None
+        except Exception as e:
+            tokenizer_revision = f"UNRESOLVED ({e})"
+        code_sha256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+        config_sha256 = (hashlib.sha256(Path(args.config).read_bytes()).hexdigest()
+                         if args.config and os.path.exists(args.config) else None)
+        print(f"Phase 2C full-coverage mode: run_id={run_id}, "
+              f"base_model_revision={base_model_revision}, tokenizer_revision={tokenizer_revision}, "
+              f"code_sha256={code_sha256[:12]}..., config_sha256={(config_sha256 or '')[:12]}...")
 
     for method in methods:
         print(f"\n{'─'*60}")
-        traj = train_method(
+        traj, manifest = train_method(
             method_name=method,
             base_state=base_state,
             ref_model=ref_m,
@@ -811,11 +1123,16 @@ def main():
             use_lora=HAS_PEFT,
             n_eval=n_eval,
             model_name=model_name,
-            loss_kwargs=({"margin": args.margin}
-                         if (args.margin is not None and method in ("LoKU", "FORGEH"))
-                         else {}),
+            loss_kwargs=_build_loss_kwargs(method, args),
+            val_probes=val_probes,
+            report_probes=report_probes,
+            save_all_steps=args.save_all_steps,
+            run_id=run_id, seed=args.seed,
+            base_model_revision=base_model_revision, tokenizer_revision=tokenizer_revision,
+            code_sha256=code_sha256, config_sha256=config_sha256,
         )
         all_trajectories[method] = traj
+        all_manifests[method] = manifest
 
     print(f"\nAll methods done in {(time.time()-t0)/60:.1f} min.")
 
@@ -823,6 +1140,11 @@ def main():
     with open(traj_path, "w") as f:
         json.dump(all_trajectories, f, indent=2)
     print(f"Trajectories → {traj_path}")
+
+    manifests_path = out / "checkpoint_manifests.json"
+    with open(manifests_path, "w") as f:
+        json.dump(all_manifests, f, indent=2)
+    print(f"Checkpoint manifests → {manifests_path}")
 
     plot_trajectories(all_trajectories, out / "trajectory_plot.png")
     write_csv(all_trajectories, out / "comparison_table.csv")

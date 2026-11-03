@@ -1,0 +1,249 @@
+{
+  "split": "forget05",
+  "n_examples": 60,
+  "results": {
+    "FORGE_gamma0.5": {
+      "canonical": {
+        "rouge_leak_mean": 0.47482755254860515,
+        "rouge_leak_std": 0.01987244273835705,
+        "exact_leak_mean": 0.3944444444444444,
+        "exact_leak_std": 0.06285393610547091,
+        "n_seeds": 3,
+        "per_seed_rouge_leak": [
+          0.4703236013349189,
+          0.5011036158214236,
+          0.4530554404894728
+        ]
+      },
+      "token_drop": {
+        "rouge_leak_mean": 0.3225049603132159,
+        "rouge_leak_std": 0.005073376872156308,
+        "exact_leak_mean": 0.11666666666666665,
+        "exact_leak_std": 0.023570226039551584,
+        "n_seeds": 3,
+        "per_seed_rouge_leak": [
+          0.32590433792879586,
+          0.32627719102241587,
+          0.3153333519884359
+        ]
+      },
+      "word_shuffle": {
+        "rouge_leak_mean": 0.2889744210452689,
+        "rouge_leak_std": 0.013544210604346291,
+        "exact_leak_mean": 0.03888888888888889,
+        "exact_leak_std": 0.007856742013183864,
+        "n_seeds": 3,
+        "per_seed_rouge_leak": [
+          0.3080855768678758,
+          0.2783047274822676,
+          0.28053295878566326
+        ]
+      },
+      "truncation": {
+        "rouge_leak_mean": 0.28384258791064715,
+        "rouge_leak_std": 0.016322024488645375,
+        "exact_leak_mean": 0.08333333333333333,
+        "exact_leak_std": 0.013608276348795436,
+        "n_seeds": 3,
+        "per_seed_rouge_leak": [
+          0.2966221911043464,
+          0.29409982904728627,
+          0.26080574358030867
+        ]
+      }
+    },
+    "FORGE_gamma0": {
+      "canonical": {
+        "rouge_leak_mean": 0.5316341871868371,
+        "rouge_leak_std": 0.013884783546026827,
+        "exact_leak_mean": 0.5,
+        "exact_leak_std": 0.023570226039551608,
+        "n_seeds": 3,
+        "per_seed_rouge_leak": [
+          0.5400152980619068,
+          0.5120651221805934,
+          0.5428221413180109
+        ]
+      },
+      "token_drop": {
+        "rouge_leak_mean": 0.3579887599989769,
+        "rouge_leak_std": 0.011915336454655088,
+        "exact_leak_mean": 0.20555555555555557,
+        "exact_leak_std": 0.02832788618662659,
+        "n_seeds": 3,
+        "per_seed_rouge_leak": [
+          0.35403823692325276,
+          0.37415056057257906,
+          0.3457774825010989
+        ]
+      },
+      "word_shuffle": {
+        "rouge_leak_mean": 0.3203813791426333,
+        "rouge_leak_std": 0.004383659943041016,
+        "exact_leak_mean": 0.09999999999999999,
+        "exact_leak_std": 0.013608276348795436,
+        "n_seeds": 3,
+        "per_seed_rouge_leak": [
+          0.31708784910651766,
+          0.326576683120647,
+          0.31747960520073526
+        ]
+      },
+      "truncation": {
+        "rouge_leak_mean": 0.32223798400098375,
+        "rouge_leak_std": 0.0050789838707389805,
+        "exact_leak_mean": 0.12222222222222223,
+        "exact_leak_std": 0.02078698548207745,
+        "n_seeds": 3,
+        "per_seed_rouge_leak": [
+          0.3290412285481888,
+          0.31684111400791537,
+          0.3208316094468471
+        ]
+      }
+    }
+  },
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "per_seed": {
+    "FORGE_gamma0.5": {
+      "42": {
+        "canonical": {
+          "rouge_leak_mean": 0.4703236013349189,
+          "exact_leak_frac": 0.35,
+          "n": 60
+        },
+        "token_drop": {
+          "rouge_leak_mean": 0.32590433792879586,
+          "exact_leak_frac": 0.13333333333333333,
+          "n": 60
+        },
+        "word_shuffle": {
+          "rouge_leak_mean": 0.3080855768678758,
+          "exact_leak_frac": 0.03333333333333333,
+          "n": 60
+        },
+        "truncation": {
+          "rouge_leak_mean": 0.2966221911043464,
+          "exact_leak_frac": 0.08333333333333333,
+          "n": 60
+        }
+      },
+      "123": {
+        "canonical": {
+          "rouge_leak_mean": 0.5011036158214236,
+          "exact_leak_frac": 0.48333333333333334,
+          "n": 60
+        },
+        "token_drop": {
+          "rouge_leak_mean": 0.32627719102241587,
+          "exact_leak_frac": 0.08333333333333333,
+          "n": 60
+        },
+        "word_shuffle": {
+          "rouge_leak_mean": 0.2783047274822676,
+          "exact_leak_frac": 0.03333333333333333,
+          "n": 60
+        },
+        "truncation": {
+          "rouge_leak_mean": 0.29409982904728627,
+          "exact_leak_frac": 0.1,
+          "n": 60
+        }
+      },
+      "456": {
+        "canonical": {
+          "rouge_leak_mean": 0.4530554404894728,
+          "exact_leak_frac": 0.35,
+          "n": 60
+        },
+        "token_drop": {
+          "rouge_leak_mean": 0.3153333519884359,
+          "exact_leak_frac": 0.13333333333333333,
+          "n": 60
+        },
+        "word_shuffle": {
+          "rouge_leak_mean": 0.28053295878566326,
+          "exact_leak_frac": 0.05,
+          "n": 60
+        },
+        "truncation": {
+          "rouge_leak_mean": 0.26080574358030867,
+          "exact_leak_frac": 0.06666666666666667,
+          "n": 60
+        }
+      }
+    },
+    "FORGE_gamma0": {
+      "42": {
+        "canonical": {
+          "rouge_leak_mean": 0.5400152980619068,
+          "exact_leak_frac": 0.5166666666666667,
+          "n": 60
+        },
+        "token_drop": {
+          "rouge_leak_mean": 0.35403823692325276,
+          "exact_leak_frac": 0.16666666666666666,
+          "n": 60
+        },
+        "word_shuffle": {
+          "rouge_leak_mean": 0.31708784910651766,
+          "exact_leak_frac": 0.1,
+          "n": 60
+        },
+        "truncation": {
+          "rouge_leak_mean": 0.3290412285481888,
+          "exact_leak_frac": 0.11666666666666667,
+          "n": 60
+        }
+      },
+      "123": {
+        "canonical": {
+          "rouge_leak_mean": 0.5120651221805934,
+          "exact_leak_frac": 0.4666666666666667,
+          "n": 60
+        },
+        "token_drop": {
+          "rouge_leak_mean": 0.37415056057257906,
+          "exact_leak_frac": 0.23333333333333334,
+          "n": 60
+        },
+        "word_shuffle": {
+          "rouge_leak_mean": 0.326576683120647,
+          "exact_leak_frac": 0.11666666666666667,
+          "n": 60
+        },
+        "truncation": {
+          "rouge_leak_mean": 0.31684111400791537,
+          "exact_leak_frac": 0.1,
+          "n": 60
+        }
+      },
+      "456": {
+        "canonical": {
+          "rouge_leak_mean": 0.5428221413180109,
+          "exact_leak_frac": 0.5166666666666667,
+          "n": 60
+        },
+        "token_drop": {
+          "rouge_leak_mean": 0.3457774825010989,
+          "exact_leak_frac": 0.21666666666666667,
+          "n": 60
+        },
+        "word_shuffle": {
+          "rouge_leak_mean": 0.31747960520073526,
+          "exact_leak_frac": 0.08333333333333333,
+          "n": 60
+        },
+        "truncation": {
+          "rouge_leak_mean": 0.3208316094468471,
+          "exact_leak_frac": 0.15,
+          "n": 60
+        }
+      }
+    }
+  }
+}
