@@ -1,37 +1,35 @@
 """
 forge/trainer.py
-────────────────
+
+STATUS NOTE (2026-07-29, docs/experiment_audit.md item 7/8): this module is
+NOT currently imported by any script that produces real results — every
+real GPU experiment in this repo (wk4/wk6/wk8/wk9, and all revision-phase
+work) goes through the self-contained loss functions in
+scripts/run_experiments.py instead. The original "Gap A/B/C" design below
+(Fisher-weighted dual adapters, adversarial probe generator, CoT KL loss)
+was an earlier, more ambitious proposal that was scoped down during
+implementation; the actual validated FORGE objective is the simpler
+bounded-ascent + retain + perturbed-forget-robustness loss documented on
+`loss_FORGE` below, matching the IEEE IoT manuscript. The loss functions in
+this file (including NPO/SimNPO) were synced to match
+scripts/run_experiments.py in this revision pass for repo consistency, but
+this file is not yet wired into the actual experiment pipeline — treat
+scripts/run_experiments.py as canonical until this is resolved.
+
+Original module description (superseded, kept for history):
 FORGE UnlearnTrainer — drop-in replacement for OpenUnlearning's
 base UnlearnTrainer.
 
-Three novel components:
+Three novel components (NOT implemented / NOT part of the validated
+objective — see loss_FORGE below for what is actually used):
   Gap A  Gated LoRA with Fisher-weighted adapter merge
   Gap B  Adversarial inner loop (probe generator Φ_ψ)
   Gap C  Step-wise CoT KL loss on reasoning traces (R-TOFU)
 
-Objective:
-  ℒ = ℒ_forget + λ·ℒ_retain + γ·ℒ_robust(ψ) + ζ·ℒ_reason + η·ℒ_gate
-  min over (θ, g_φ);   max over ψ
-
 Dependencies:
   pip install transformers peft torch
-  pip install open-unlearning  # for UnlearnTrainer base (or swap for HF Trainer)
 
-Usage (OpenUnlearning):
-  # configs/trainer/FORGE.yaml
-  _target_: forge.trainer.FORGETrainer
-  method_args:
-    lora_rank: 32
-    lambda_retain: 1.0
-    gamma_robust: 0.5
-    zeta_reason: 0.0       # set > 0 for R-TOFU
-    eta_gate: 0.01
-    k_adv: 2
-
-  # Then run:
-  python src/train.py trainer=FORGE ...
-
-Standalone (without OpenUnlearning):
+Standalone:
   See forge_train_standalone() at the bottom.
 """
 
@@ -654,7 +652,16 @@ def loss_KL(model, ref, forget, retain, device):
                   F.softmax(out_r.logits.detach(), -1), reduction="batchmean")
     return l_f + kl
 
-def loss_NPO(model, ref, forget, retain, device, beta=0.1):
+def loss_NPO(model, ref, forget, retain, device, beta=2.5):
+    # beta default synced 2026-07-29 with scripts/run_experiments.py::loss_NPO
+    # (the module actually used for all real GPU results in this repo — this
+    # copy in forge/trainer.py is not imported by any working script, see
+    # docs/experiment_audit.md item 7). The original beta=0.1 here amplifies
+    # the loss by 2/beta=20x under the shared lr=2e-5 and causes the same
+    # catastrophic collapse documented for the run_experiments.py copy
+    # (outputs/probe/npo_beta0.1 equivalent trajectories); beta=2.5 keeps the
+    # peak joint FQ_NLL*MU_ret operating point intact for a checkpoint-selected
+    # evaluation instead of overshooting past it.
     out_s = model(input_ids=forget["input_ids"].to(device),
                   attention_mask=forget["attention_mask"].to(device))
     with torch.no_grad():
@@ -667,6 +674,30 @@ def loss_NPO(model, ref, forget, retain, device, beta=0.1):
     rlogp = F.log_softmax(out_r.logits[..., :-1, :], -1).gather(-1, tgt_c.unsqueeze(-1)).squeeze(-1)
     log_ratio = ((logp - rlogp) * mask).sum(-1) / (mask.sum(-1) + 1e-8)
     return (-2 / beta * torch.log(torch.sigmoid(-beta * log_ratio) + 1e-8)).mean()
+
+
+def loss_SimNPO(model, ref, forget, retain, device, beta=2.5, gamma=5.0, lam=1.0):
+    """SimNPO (Fan et al., NeurIPS 2025, arXiv:2410.07163) — reference-free,
+    length-normalized, margin-scaled saturating ascent. Synced 2026-07-29 from
+    scripts/run_experiments.py::loss_SimNPO (the module actually used for real
+    GPU results); this copy was previously entirely absent from forge/trainer.py.
+    gamma=5.0 default found empirically: gamma=0 (the naive choice) produces
+    zero forgetting effect since the model's own forget-set NLL starts small
+    (already-memorized data has low NLL), so beta*u-gamma with gamma=0 is
+    already past the saturation point from step 0. gamma=5.0 shifts the
+    starting point into the unsaturated region (see outputs/probe/simnpo_gamma*
+    for the sweep that produced this value).
+    """
+    out = model(input_ids=forget["input_ids"].to(device),
+                attention_mask=forget["attention_mask"].to(device))
+    tgts = forget["labels"].to(device)[..., 1:]
+    mask = (tgts != -100).float()
+    tgt_c = tgts.masked_fill(tgts == -100, 0)
+    logp = F.log_softmax(out.logits[..., :-1, :], -1).gather(-1, tgt_c.unsqueeze(-1)).squeeze(-1)
+    u = -((logp * mask).sum(-1) / (mask.sum(-1) + 1e-8))  # length-normalized forget NLL per sample
+    l_f = (-2.0 / beta * torch.log(torch.sigmoid(beta * u - gamma) + 1e-8)).mean()
+    l_r = _nll(model, retain, device)
+    return l_f + lam * l_r
 
 def loss_FLAT(model, ref, forget, retain, device, beta=2.0):
     out = model(input_ids=forget["input_ids"].to(device),
@@ -746,6 +777,7 @@ METHOD_LOSSES = {
     "GD":     loss_GD,
     "KL":     loss_KL,
     "NPO":    loss_NPO,
+    "SimNPO": loss_SimNPO,
     "FLAT":   loss_FLAT,
     "LoKU":   loss_LoKU,
     "FORGE":  loss_FORGE,

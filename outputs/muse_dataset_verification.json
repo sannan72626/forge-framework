@@ -1,0 +1,44 @@
+{
+  "checks": [
+    {
+      "dataset_id": "jaechan-repo/muse-bench",
+      "config": "news",
+      "loaded": false,
+      "is_official": false,
+      "is_proxy": false,
+      "used_synthetic_fallback": false,
+      "splits": {},
+      "error": "Dataset 'jaechan-repo/muse-bench' doesn't exist on the Hub or cannot be accessed.",
+      "role": "previously used (found to be broken) \u2014 must never load successfully"
+    },
+    {
+      "dataset_id": "muse-bench/MUSE-News",
+      "config": "raw",
+      "loaded": true,
+      "is_official": true,
+      "is_proxy": false,
+      "used_synthetic_fallback": false,
+      "splits": {
+        "forget": {
+          "n_examples": 889,
+          "sample_word_count": 545
+        },
+        "retain1": {
+          "n_examples": 1777,
+          "sample_word_count": 265
+        },
+        "retain2": {
+          "n_examples": 1778,
+          "sample_word_count": 608
+        },
+        "holdout": {
+          "n_examples": 3043,
+          "sample_word_count": 329
+        }
+      },
+      "error": null,
+      "role": "current dataset used by scripts/run_muse.py"
+    }
+  ],
+  "verdict": "CONFIRMED: the previously-used dataset id does not exist (synthetic fallback would have fired on every run pre-fix); the currently-used dataset id is real and loads the official MUSE-News corpus. No synthetic fallback remains in scripts/run_muse.py (verified separately by grep for 'synthetic'/'fallback' \u2014 see docs/experiment_audit.md item 6)."
+}

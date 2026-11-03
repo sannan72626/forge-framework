@@ -1,0 +1,28 @@
+{
+  "status": "ok",
+  "adapter": "outputs/wk8/GD/forget05/seed123/GD",
+  "oracle_adapter": "outputs/wk0/phi15_retain95",
+  "split": "forget05",
+  "n_forget_probe": 50,
+  "n_mu_probe": 30,
+  "fq_official": 0.9977109764909107,
+  "mu_official": 0.3904940549451048,
+  "mu_official_per_source": {
+    "retain": {
+      "rouge_l_recall": 0.2792266587385541,
+      "answer_prob": 0.12761240498628795,
+      "truth_score": 0.2313456476057147
+    },
+    "real_authors": {
+      "rouge_l_recall": 0.9,
+      "answer_prob": 0.707848957917621,
+      "truth_score": 0.8470743458848361
+    },
+    "world_facts": {
+      "rouge_l_recall": 0.9222222222222222,
+      "answer_prob": 0.7534232579520921,
+      "truth_score": 0.8391708042657572
+    }
+  },
+  "note": "Independent reimplementation of TOFU Truth-Ratio FQ and 9-quantity MU; not verified byte-identical to the original authors' reference code (see forge/tofu_official.py docstring)."
+}

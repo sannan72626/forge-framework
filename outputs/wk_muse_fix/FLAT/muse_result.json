@@ -1,0 +1,7 @@
+{
+  "method": "FLAT",
+  "verbmem": 0.015696123625627053,
+  "knowmem": 0.03535873054839887,
+  "pass_verbmem": true,
+  "pass_knowmem": true
+}

@@ -6,5 +6,5 @@ ihl_margin: 4.0
 max_steps: 200
 eval_every: 25
 per_device_batch: 4
-max_length: 128
+max_length: 256
 retain_dataset: mmlu

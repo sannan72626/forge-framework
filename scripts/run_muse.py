@@ -29,22 +29,31 @@ TOK_MODEL  = "microsoft/phi-1_5"
 # ── Data ──────────────────────────────────────────────────────────────────────
 
 def load_muse_data(n_forget=50, n_retain=50):
-    try:
-        from datasets import load_dataset
-        ds = load_dataset("jaechan-repo/muse-bench", "news", trust_remote_code=True)
-        forget_texts = [e["text"] for e in list(ds["forget"])[:n_forget]]
-        forget_qa    = [(e.get("question","Who?"), e.get("answer","Unknown"))
-                        for e in list(ds["forget"])[:n_forget]]
-        retain_texts = [e["text"] for e in list(ds["retain"])[:n_retain]]
-    except Exception as e:
-        print(f"  MUSE dataset load failed ({e}), using synthetic fallback", flush=True)
-        forget_texts = [f"The news article about event {i} contains details about incident {i} "
-                        f"which occurred in city {i} affecting {i*10} people. " * 10
-                        for i in range(n_forget)]
-        forget_qa    = [(f"What happened in event {i}?", f"Incident {i} occurred in city {i}.")
-                        for i in range(n_forget)]
-        retain_texts = [f"General information about topic {i} and its implications for society. " * 10
-                        for i in range(n_retain)]
+    """Loads the real, official MUSE-News benchmark data (muse-bench/MUSE-News on
+    the HF Hub). Revision note (2026-07-14, addressing review [R13]/[R15]): the
+    previous implementation pointed at a nonexistent dataset id
+    ("jaechan-repo/muse-bench") which ALWAYS failed and silently fell back to
+    procedurally generated placeholder text ("The news article about event {i}...")
+    — meaning every previously reported MUSE-News number was measured on synthetic
+    text, not real news articles. This version loads the actual benchmark corpus
+    (889 real forget articles, 1777+1778 retain articles) and the official
+    forget_qa/retain_qa pairs, and hard-fails (no fallback) if the load doesn't
+    succeed, so a broken data path can never again silently produce fabricated
+    results.
+    """
+    from datasets import load_dataset
+    raw = load_dataset("muse-bench/MUSE-News", "raw")
+    qa = load_dataset("muse-bench/MUSE-News", "knowmem")
+
+    forget_texts = [e["text"] for e in list(raw["forget"])[:n_forget]]
+    retain_texts = [e["text"] for e in list(raw["retain1"])[:n_retain]]
+    forget_qa = [(e["question"], e["answer"]) for e in list(qa["forget_qa"])]
+
+    if len(forget_texts) < n_forget or len(retain_texts) < n_retain:
+        raise RuntimeError(
+            f"Requested n_forget={n_forget}, n_retain={n_retain} but MUSE-News "
+            f"raw split only has forget={len(raw['forget'])}, retain1={len(raw['retain1'])}"
+        )
     return forget_texts, forget_qa, retain_texts
 
 
@@ -102,6 +111,25 @@ def knowledge_mem(model, tok, qa_pairs, device, max_samples=30):
 
 def loss_GA(m,_,fb,rb,dev): return -m(**{k:v.to(dev) for k,v in fb.items()}).loss
 
+def loss_NPO(m, ref, fb, rb, dev, beta=2.5):
+    out = m(input_ids=fb["input_ids"].to(dev), attention_mask=fb["attention_mask"].to(dev))
+    with torch.no_grad():
+        ref_out = ref(input_ids=fb["input_ids"].to(dev), attention_mask=fb["attention_mask"].to(dev))
+    tgts = fb["labels"].to(dev)[..., 1:]; mask = (tgts != -100).float()
+    tgt_c = tgts.masked_fill(tgts == -100, 0)
+    logp = F.log_softmax(out.logits[..., :-1, :], -1).gather(-1, tgt_c.unsqueeze(-1)).squeeze(-1)
+    rlogp = F.log_softmax(ref_out.logits[..., :-1, :], -1).gather(-1, tgt_c.unsqueeze(-1)).squeeze(-1)
+    ratio = ((logp - rlogp) * mask).sum(-1) / (mask.sum(-1) + 1e-8)
+    return (-2.0 / beta * torch.log(torch.sigmoid(-beta * ratio) + 1e-8)).mean()
+
+def loss_SimNPO(m, ref, fb, rb, dev, beta=2.5, gamma=0.0):
+    out = m(input_ids=fb["input_ids"].to(dev), attention_mask=fb["attention_mask"].to(dev))
+    tgts = fb["labels"].to(dev)[..., 1:]; mask = (tgts != -100).float()
+    tgt_c = tgts.masked_fill(tgts == -100, 0)
+    logp = F.log_softmax(out.logits[..., :-1, :], -1).gather(-1, tgt_c.unsqueeze(-1)).squeeze(-1)
+    u = -((logp * mask).sum(-1) / (mask.sum(-1) + 1e-8))
+    return (-2.0 / beta * torch.log(torch.sigmoid(beta * u - gamma) + 1e-8)).mean()
+
 def loss_FLAT(m,_,fb,rb,dev,beta=2.0):
     out=m(input_ids=fb["input_ids"].to(dev),attention_mask=fb["attention_mask"].to(dev))
     t=fb["labels"].to(dev)[...,1:]; mask=(t!=-100).float(); tc=t.masked_fill(t==-100,0)
@@ -124,7 +152,9 @@ def loss_FORGE(m,_,fb,rb,dev,lam=1.0,gamma=0.5,margin=4.0):
     lrob=-torch.tanh(nrob/margin)*margin
     return lf+lam*lr_+gamma*lrob
 
-METHOD_LOSSES={"GA":loss_GA,"FLAT":loss_FLAT,"LoKU":loss_LoKU,"FORGE":loss_FORGE}
+METHOD_LOSSES={"GA":loss_GA,"NPO":loss_NPO,"SimNPO":loss_SimNPO,
+               "FLAT":loss_FLAT,"LoKU":loss_LoKU,"FORGE":loss_FORGE}
+NEEDS_REF = {"NPO"}
 
 
 # ── Fine-tune on MUSE forget texts (memorise) ─────────────────────────────────
@@ -142,14 +172,14 @@ def finetune_on_muse(forget_texts, retain_texts, tok, device, out_path, cfg):
     dl = DataLoader(TextDataset(all_texts, tok, 256), batch_size=2,
                     shuffle=True, collate_fn=collate)
     opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad], lr=5e-5)
-    for ep in range(3):
+    for ep in range(8):
         losses=[]
         for batch in dl:
             model.train()
             out=model(**{k:v.to(device) for k,v in batch.items()})
             opt.zero_grad(); out.loss.backward(); opt.step()
             losses.append(out.loss.item())
-        print(f"  Memorise epoch {ep+1}/3  loss={np.mean(losses):.4f}", flush=True)
+        print(f"  Memorise epoch {ep+1}/8  loss={np.mean(losses):.4f}", flush=True)
     out_path.mkdir(parents=True, exist_ok=True)
     model.save_pretrained(out_path)
     tok.save_pretrained(out_path)
@@ -167,6 +197,14 @@ def run_method(method, forget_texts, forget_qa, retain_texts,
                           lora_alpha=64, lora_dropout=0.0, target_modules=["q_proj","v_proj"])
     from peft import get_peft_model as gpm
     model = gpm(model, lora_cfg)
+
+    ref_model = None
+    if method in NEEDS_REF:
+        ref_base = AutoModelForCausalLM.from_pretrained(BASE_MODEL, torch_dtype=torch.bfloat16)
+        ref_model = PeftModel.from_pretrained(ref_base, memorised_path).merge_and_unload().to(device)
+        ref_model.eval()
+        for p in ref_model.parameters():
+            p.requires_grad_(False)
 
     f_dl = DataLoader(TextDataset(forget_texts, tok, int(cfg.get("max_length",128))),
                       batch_size=int(cfg.get("per_device_batch",4)), shuffle=True, collate_fn=collate)
@@ -190,7 +228,7 @@ def run_method(method, forget_texts, forget_qa, retain_texts,
         except: f_it=iter(f_dl); fb=next(f_it)
         try: rb=next(r_it)
         except: r_it=iter(r_dl); rb=next(r_it)
-        loss=loss_fn(model,None,fb,rb,device)
+        loss=loss_fn(model,ref_model,fb,rb,device)
         optimizer.zero_grad(); loss.backward()
         torch.nn.utils.clip_grad_norm_(trainable,1.0); optimizer.step()
         if step%eval_every==0:
@@ -213,11 +251,13 @@ def run_method(method, forget_texts, forget_qa, retain_texts,
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--methods",  default="GA,FLAT,LoKU,FORGE")
+    p.add_argument("--methods",  default="GA,NPO,SimNPO,FLAT,LoKU,FORGE")
     p.add_argument("--config",   default="configs/forge_default.yaml")
-    p.add_argument("--out_dir",  default="outputs/wk7/muse")
-    p.add_argument("--n_forget", type=int, default=50)
-    p.add_argument("--n_retain", type=int, default=50)
+    p.add_argument("--out_dir",  default="outputs/wk_muse_fix")
+    p.add_argument("--n_forget", type=int, default=200,
+                   help="Real MUSE-News forget articles used (corpus has 889 total)")
+    p.add_argument("--n_retain", type=int, default=200,
+                   help="Real MUSE-News retain articles used (corpus has 1777+1778 total)")
     args = p.parse_args()
 
     cfg = {}
